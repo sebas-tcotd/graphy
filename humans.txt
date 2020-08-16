@@ -1,0 +1,18 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Martín Rodríguez Cornejo -- <role> -- <twitter>
+    Mauricio Linares Purizaca -- <role> -- <twitter>
+    Leonardo Torres Briones -- <role> -- <twitter>
+    Sebastian Vargas Pizango -- Front-End -- @sebas_tcotd
+
+# THANKS
+
+    <name>
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5
+    Apache Server Configs, Modernizr, Normalize.css, Cytoscape.js, Highlight.js
