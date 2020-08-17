@@ -1,3 +1,5 @@
+"use strict";
+
 var cy = cytoscape({
     container: document.getElementById("grafo"),
 
