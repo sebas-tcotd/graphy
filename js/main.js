@@ -17,7 +17,17 @@ var cy = cytoscape({
             selector: "node",
 
             style: {
-                "label": "data(id)"
+                "label": "data(id)",
+                "text-halign": "center",
+                "text-valign": "center",
+                "font-family": "Roboto Condensed"
+            }
+        },
+        {
+            selector: "edge",
+
+            style: {
+                "curve-style": "bezier"
             }
         }
     ],
@@ -42,6 +52,7 @@ function crearNodos(n = 0){
     
 
     if(n == null || n < 0){
+        cy.remove(cy.$());
         console.log("Ingresaste algo mal...");
     }else if(n === 0){
         cy.remove(cy.$());
