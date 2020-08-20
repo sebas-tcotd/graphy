@@ -19,7 +19,14 @@ var cy = cytoscape({
             selector: "node",
 
             style: {
-                "label": "data(id)"
+                "label": "data(id)",
+            }
+        },
+        {
+            selector: "edge",
+
+            style: {
+                "curve-style": "unbundled-bezier"
             }
         }
     ],
@@ -32,6 +39,7 @@ var cy = cytoscape({
 
 let number_nodes
 let ids = []
+let edges_counter = 1;
 
 function createNodes()
 {
@@ -55,7 +63,7 @@ function fillIdsArray()
     }
 }
 
-function joinEdges(times_joined)
+function joinEdges()
 {
     let current_id;
     let random;
@@ -65,11 +73,17 @@ function joinEdges(times_joined)
     for(var i = 0; i < number_nodes; i++)
     {
         random = ids[Math.floor(Math.random() * ids.length)]
-        cy.add({
-            edges: [
-                {data: {id: `${"e" + (i + (times_joined * number_nodes))}`, source: `${current_id}`, target: `${random}`}}
-            ]
-        })
+        if(adyacency_matrix[current_id - 1][random - 1] == 0)
+        {
+            cy.add({
+                edges: [
+                    {data: {id: `${"e" + edges_counter}`, source: `${current_id}`, target: `${random}`}}
+                ]
+            })
+
+            adyacency_matrix[current_id - 1] [random - 1] = 1;
+            edges_counter++;
+        }
         current_id = random;
         ids.splice(ids.indexOf(random), 1);
     }
@@ -77,11 +91,12 @@ function joinEdges(times_joined)
 
 createNodes();
 
+let adyacency_matrix = Array(number_nodes).fill(null).map(() => Array(number_nodes).fill(0));
+
 for(var i = 0; i < 2; i++)
 {
     fillIdsArray();
-    joinEdges(i);
+    joinEdges();
 }
-
 
 cy.fit();
