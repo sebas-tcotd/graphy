@@ -26,7 +26,8 @@ var cy = cytoscape({
       selector: "edge",
 
       style: {
-        "curve-style": "bezier"
+        "curve-style": "bezier",
+        //"target-arrow-shape": "triangle"
       }
     }
   ],
@@ -69,7 +70,59 @@ function crearNodos(n = 0) {
   cy.fit();
 }
 
-function fillIdsArray() {
+function crearAristas() { //n = número de nodos
+  let origen, numeroDeConexiones;
+  let destino = new Array();
+  //let nodo = cy.nodes();
+
+  for (let i = 0; i < numeroDeNodos; i++) {
+    //debugger;
+    origen = Math.ceil(Math.random() * numeroDeNodos);
+    numeroDeConexiones = Math.ceil(Math.random() * numeroDeNodos);
+    destino = [];
+    let j;
+    for (j = 0; j < numeroDeConexiones; j++) {
+      destino[j] = Math.ceil(Math.random() * numeroDeNodos);
+    }
+    j = 0;
+    while(j != destino.length){
+        cy.add({
+          edges: [{
+            data: {
+              id: `e${origen}A${destino[j]}`,
+              source: `${origen}`,
+              target: `${destino[j]}`
+            }
+          }]
+        });
+        j++;
+    }
+  }
+  for (let i = 0; i < numeroDeNodos; i++) {
+      destino = [];
+    if (cy.$(`#${i + 1}`).totalDegree() == 0) {
+      origen = i + 1;
+      let j;
+      //debugger;
+    for (j = 0; j < numeroDeConexiones; j++) {
+      destino[j] = Math.ceil(Math.random() * numeroDeNodos);
+    }
+      if (origen != 0 || destino != 0) {
+        cy.add({
+          edges: [{
+            data: {
+              id: `e${origen}A${destino[j - 1]}`,
+              source: `${origen}`,
+              target: `${destino[j - 1]}`
+            }
+          }]
+        });
+      }
+    }
+  }
+}
+
+/*function fillIdsArray() {
   for (var i = 0; i < numeroDeNodos; i++) {
     ids[i] = i + 1;
   }
@@ -97,21 +150,23 @@ function joinEdges(times_joined) {
   }
 
 
-}
+}*/
 
 var formulario = document.querySelector(".ingreso-de-datos");
 
 formulario.addEventListener("submit", () => {
   numeroDeNodos = parseInt(document.querySelector("#numero-nodos").value);
-  console.log(numeroDeNodos);
+  console.clear();
+  console.log(`Nodos creados: ${numeroDeNodos}`);
 
   crearNodos(numeroDeNodos);
+  crearAristas();
 
   //debugger;
-  for (var i = 0; i < 2; i++) {
+  /*for (var i = 0; i < 2; i++) {
     fillIdsArray();
     joinEdges(i);
-  }
+  }*/
 });
 
 //cy.fit();
