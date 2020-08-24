@@ -1,5 +1,7 @@
 "use strict";
 
+//var microprofiler = require('microprofiler');
+
 var cy = cytoscape({
   container: document.getElementById("grafo"),
 
@@ -67,7 +69,6 @@ function crearNodos(n = 0) {
   cy.layout({
     name: "random"
   }).run();
-  cy.fit();
 }
 
 function crearAristas() { //n = número de nodos
@@ -78,35 +79,35 @@ function crearAristas() { //n = número de nodos
   for (let i = 0; i < numeroDeNodos; i++) {
     //debugger;
     origen = Math.ceil(Math.random() * numeroDeNodos);
-    numeroDeConexiones = Math.ceil(Math.random() * numeroDeNodos);
+    numeroDeConexiones = Math.ceil(Math.random() * Math.sqrt(numeroDeNodos));
     destino = [];
     let j;
     for (j = 0; j < numeroDeConexiones; j++) {
-      destino[j] = Math.ceil(Math.random() * numeroDeNodos);
+      destino[j] = Math.ceil((Math.random() * numeroDeNodos));
     }
     j = 0;
-    while(j != destino.length){
-        cy.add({
-          edges: [{
-            data: {
-              id: `e${origen}A${destino[j]}`,
-              source: `${origen}`,
-              target: `${destino[j]}`
-            }
-          }]
-        });
-        j++;
+    while (j != destino.length) {
+      cy.add({
+        edges: [{
+          data: {
+            id: `e${origen}A${destino[j]}`,
+            source: `${origen}`,
+            target: `${destino[j]}`
+          }
+        }]
+      });
+      j++;
     }
   }
   for (let i = 0; i < numeroDeNodos; i++) {
-      destino = [];
+    destino = [];
     if (cy.$(`#${i + 1}`).totalDegree() == 0) {
       origen = i + 1;
       let j;
       //debugger;
-    for (j = 0; j < numeroDeConexiones; j++) {
-      destino[j] = Math.ceil(Math.random() * numeroDeNodos);
-    }
+      for (j = 0; j < numeroDeConexiones; j++) {
+        destino[j] = Math.ceil(Math.random() * numeroDeNodos);
+      }
       if (origen != 0 || destino != 0) {
         cy.add({
           edges: [{
@@ -122,51 +123,32 @@ function crearAristas() { //n = número de nodos
   }
 }
 
-/*function fillIdsArray() {
-  for (var i = 0; i < numeroDeNodos; i++) {
-    ids[i] = i + 1;
-  }
+function crearGrafo(n) {
+  crearNodos(n);
+  crearAristas();
+  cy.fit();
 }
 
-function joinEdges(times_joined) {
-  let current_id;
-  let random;
-  random = ids[Math.floor(Math.random() * ids.length)]
-  current_id = random;
-
-  for (var i = 0; i < numeroDeNodos; i++) {
-    random = ids[Math.floor(Math.random() * ids.length)]
-    cy.add({
-      edges: [{
-        data: {
-          id: `e${i + (times_joined * numeroDeNodos)}`,
-          source: `${current_id}`,
-          target: `${random}`
-        }
-      }]
-    })
-    current_id = random;
-    ids.splice(ids.indexOf(random), 1);
-  }
-
-
-}*/
-
 var formulario = document.querySelector(".ingreso-de-datos");
+var spanTiempo = document.querySelector("#tiempo-ejecucion");
 
 formulario.addEventListener("submit", () => {
   numeroDeNodos = parseInt(document.querySelector("#numero-nodos").value);
   console.clear();
   console.log(`Nodos creados: ${numeroDeNodos}`);
 
-  crearNodos(numeroDeNodos);
-  crearAristas();
+  let tiempoInicio = performance.now();
+  crearGrafo(numeroDeNodos);
+  let tiempoFinal = performance.now()
 
-  //debugger;
-  /*for (var i = 0; i < 2; i++) {
-    fillIdsArray();
-    joinEdges(i);
-  }*/
+  let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
+
+
+  // crearNodos(numeroDeNodos);
+  // crearAristas();
+
+  spanTiempo.innerHTML = `Tiempo de ejecución: ${tiempoDeEjecucion / 1000} segundos.`; // Esto para que se muestre en segundos
+  
 });
 
 //cy.fit();

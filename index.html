@@ -36,11 +36,16 @@
       <input type="number" id="numero-nodos" min="0">
       <input type="submit" value="Generar grafo">
     </form>
+
+    <span id="tiempo-ejecucion"></span>
   </div>
 
+
+  <!-- Zona de scripts -->
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="node_modules/cytoscape/dist/cytoscape.min.js"></script>
+  <script type="module" src="node_modules/microprofiler/index.js"></script>
   <script src="node_modules/highlight.js/lib/index.js"></script>
   <script src="js/main.js"></script>
 
