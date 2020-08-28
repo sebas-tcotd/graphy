@@ -31,6 +31,14 @@
     <p>🙂</p>
   
     <div id="grafo"></div>
+
+    <form class="ingreso-de-datos" onsubmit="return false;">
+      <label>Ingrese la cantidad de nodos a generar: </label>
+      <input type="number" id="numero-nodos" min="0">
+      <input type="submit" value="Generar grafo">
+    </form>
+
+    <span id="tiempo-ejecucion"></span>
   </div>
 
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>

@@ -41,10 +41,8 @@ let number_nodes
 let ids = []
 let edges_counter = 1;
 
-function createNodes()
+function createNodes(number_nodes)
 {
-    number_nodes = parseInt(prompt("Digite el numero de nodos: ",0));
-
     for(var i = 0; i < number_nodes; i++)
     {
         cy.add({
@@ -89,14 +87,40 @@ function joinEdges()
     }
 }
 
-createNodes();
-
-let adyacency_matrix = Array(number_nodes).fill(null).map(() => Array(number_nodes).fill(0));
-
-for(var i = 0; i < 2; i++)
+let adyacency_matrix
+function createGraph(n_nodes)
 {
-    fillIdsArray();
-    joinEdges();
+    cy.remove(cy.$());
+    createNodes(n_nodes);
+    adyacency_matrix = Array(n_nodes).fill(null).map(() => Array(n_nodes).fill(0));
+
+    for(var i = 0; i < 2; i++)
+    {
+        fillIdsArray();
+        joinEdges();
+    }
+
+    cy.fit();
 }
 
-cy.fit();
+var formulario = document.querySelector(".ingreso-de-datos");
+var spanTiempo = document.querySelector("#tiempo-ejecucion");
+
+formulario.addEventListener("submit", () => {
+  number_nodes = parseInt(document.querySelector("#numero-nodos").value);
+  console.clear();
+  console.log(`Nodos creados: ${number_nodes}`);
+
+  let tiempoInicio = performance.now();
+  createGraph(number_nodes);
+  let tiempoFinal = performance.now()
+
+  let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
+
+
+  // crearNodos(numeroDeNodos);
+  // crearAristas();
+
+  spanTiempo.innerHTML = `Tiempo de ejecución: ${tiempoDeEjecucion / 1000} segundos.`; // Esto para que se muestre en segundos
+
+});
