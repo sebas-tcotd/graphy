@@ -99,7 +99,7 @@ function crearAristas() { //n = número de nodos
       j++;
     }
   }
-  for (let i = 0; i < numeroDeNodos; i++) {
+  /*for (let i = 0; i < numeroDeNodos; i++) {
     destino = [];
     if (cy.$(`#${i + 1}`).totalDegree() == 0) {
       origen = i + 1;
@@ -120,7 +120,7 @@ function crearAristas() { //n = número de nodos
         });
       }
     }
-  }
+  }*/
 }
 
 function crearGrafo(n) {
