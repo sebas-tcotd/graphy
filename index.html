@@ -25,19 +25,43 @@
 
 <body>
   <div class="contenedor">
-    <h1 id="nombre-facultad">Facultad de Ingeniería de Sistemas e Informática</h1>
-    <h2 id="nombre-curso">Estructura de datos</h2>
-    <p>🙂</p>
-  
-    <div id="grafo"></div>
+    <header class="content-header">
 
+      <a href="http://www.unmsm.edu.pe/">
+        <img src="/img/sanMarcosLogo.png" alt="Logo San Marcos" class="logo-SM">
+      </a>
+      <div class="titulo">
+        <h1 id="nombre-facultad">Facultad de Ingeniería de Sistemas e Informática</h1>
+        <h2 id="nombre-curso">Estructura de datos</h2>
+        <h3 id="fan-service">Año de la creación de la escuela de Computación Científica</h3>
+      </div>
+      <a href="https://sistemas.unmsm.edu.pe/">
+        <img src="/img/fisiLogo.png" alt="Logo FISI" class="logo-FISI">
+      </a>
+    </header>
+    
     <form class="ingreso-de-datos" onsubmit="return false;">
       <label>Ingrese la cantidad de nodos a generar: </label>
       <input type="number" id="numero-nodos" min="0">
-      <input type="submit" value="Generar grafo">
+      <input type="submit" value="Generar grafo" class="button">
     </form>
 
-    <span id="tiempo-ejecucion"></span>
+    <div class="grafo-y-pseudo">
+      <div id="contenedor-grafo">
+        <div id="grafo"></div>
+      </div>
+
+      <div id="pseudocodigo">
+        <h2>Pseudocódigo</h2>
+        <!-- Aquí va el pseudocódigo -->
+        <span id="tiempo-ejecucion"></span>
+        <p>🙂</p>
+      </div>
+    </div>
+
+
+
+    
   </div>
 
 
