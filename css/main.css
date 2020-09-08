@@ -86,33 +86,169 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-   html {
-    box-sizing: border-box;
-    font-size: 62.5%;
-  }
-  
-  *,
-  *::before,
-  *::after {
-    box-sizing: inherit;
+:root {
+  --blanco: #FFFFFF;
+  --glass: blur(5px);
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  color: var(--blanco);
+  background-color: #21D4FD;
+  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  font-family: 'Open Sans', sans-serif;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
   }
 
-  body {
-    background-color: #F2F2F2;
-    font-family: 'Open Sans', sans-serif;
+  50% {
+    background-position: 100% 50%;
   }
 
-   #grafo {
-  border: 1px solid black;
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.button {
+  padding: 1rem 1.5rem;
+  font-size: medium;
+  background-color: transparent;
+  border-radius: .5rem;
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.button:hover {
+  background-color: var(--blanco);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+h1 {
+  font-size: 2.4rem;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+}
+
+.content-header a>img {
+  height: 10rem;
+  max-width: 100%;
+}
+
+.logo-SM {
+  filter: brightness(100);
+}
+
+.logo-FISI {
+  filter: brightness(3.5) grayscale(100);
+}
+
+.grafo-y-pseudo {
   margin: auto;
-  width: 50rem;
-  height: 50rem;
-  display: block;
-  }
+  height: 80vh;
+}
 
-  #nombre-facultad, #nombre-curso, #fan-service {
-    text-align: center;
+@media (min-width: 768px) {
+  .grafo-y-pseudo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
   }
+}
+
+#grafo {
+  width: 100%;
+  height: 100%;
+  opacity: 0.87;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+}
+
+#contenedor-grafo {
+  /* margin: auto; */
+  display: block;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: var(--glass);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+#pseudocodigo {
+  background: rgb(224, 224, 224);
+  background: linear-gradient(347deg, rgba(224, 224, 224, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  color: rgba(0, 0, 0, 0.87);
+  padding: 2rem 3rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+}
+
+#nombre-facultad,
+#nombre-curso,
+#fan-service {
+  text-align: center;
+}
+
+.ingreso-de-datos {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ingreso-de-datos label {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+#numero-nodos {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--blanco);
+  margin-bottom: 1rem;
+  font-size: 2.4rem;
+  color: var(--blanco);
+  outline: none;
+  border-radius: 0;
+  transition: all .5s ease;
+}
+
+#numero-nodos:focus {
+  border-bottom: 2px solid var(--blanco);
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -121,6 +257,7 @@ textarea {
   width: 98%;
   height: 100vh;
 }
+
 /*
  * Hide visually and from screen readers
  */
@@ -210,9 +347,9 @@ textarea {
 }
 
 @media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 1.25dppx),
-  (min-resolution: 120dpi) {
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
   /* Style adjustments for high resolution devices */
 }
 
@@ -223,6 +360,7 @@ textarea {
    ========================================================================== */
 
 @media print {
+
   *,
   *::before,
   *::after {
@@ -239,11 +377,11 @@ textarea {
   }
 
   a[href]::after {
-    content: " (" attr(href) ")";
+    content: " ("attr(href) ")";
   }
 
   abbr[title]::after {
-    content: " (" attr(title) ")";
+    content: " ("attr(title) ")";
   }
 
   /*
