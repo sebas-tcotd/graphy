@@ -78,7 +78,8 @@ function joinEdges() {
       cy.add({
         edges: [{
           data: {
-            id: `${"e" + edges_counter}`,
+            //id: `${"e" + edges_counter}`,
+            id: `e${current_id}to${random}`,
             source: `${current_id}`,
             target: `${random}`
           }
@@ -104,8 +105,9 @@ function createGraph(n_nodes) {
     fillIdsArray();
     joinEdges();
   }
-
+  cy.zoomingEnabled(true);
   cy.fit();
+  cy.zoomingEnabled(false);
 }
 
 var formulario = document.querySelector(".ingreso-de-datos");
@@ -129,5 +131,13 @@ formulario.addEventListener("submit", () => {
   spanTiempo.innerHTML = `Tiempo de ejecución: ${tiempoDeEjecucion / 1000} segundos.`; // Esto para que se muestre en segundos
   
 });
+
+let contenedorGrafo = document.querySelector('#grafo');
+contenedorGrafo.addEventListener('mousedown', function(){
+  cy.zoomingEnabled(true);
+});
+contenedorGrafo.addEventListener('mouseout', function(){
+  cy.zoomingEnabled(false);
+})
 
 //cy.fit();

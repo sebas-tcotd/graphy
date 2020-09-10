@@ -14,11 +14,16 @@
 
   <link rel="manifest" href="site.webmanifest">
   <link rel="author" href="humans.txt">
-  <link rel="apple-touch-icon" href="icon.png">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+  <!-- and it's easy to individually load additional languages -->
+  <script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/languages/go.min.js"></script>
 
   <meta name="theme-color" content="#fafafa">
 </head>
@@ -39,7 +44,7 @@
         <img src="/img/fisiLogo.png" alt="Logo FISI" class="logo-FISI">
       </a>
     </header>
-    
+
     <form class="ingreso-de-datos" onsubmit="return false;">
       <label>Ingrese la cantidad de nodos a generar: </label>
       <input type="number" id="numero-nodos" min="0">
@@ -53,16 +58,29 @@
 
       <div id="pseudocodigo">
         <h2>Pseudocódigo</h2>
+        <pre class="codigo-pseudo">
+          <code class="html">
+          Acción Principal
+          DV
+            Entero n
+          Inicio
+            Leer n
+            Escribir(n)
+          Fin_Acción
+        </code>
+      </pre>
         <!-- Aquí va el pseudocódigo -->
         <span id="tiempo-ejecucion"></span>
         <p>🙂</p>
       </div>
     </div>
-
-
-
-    
   </div>
+
+  <footer class="site-footer">
+    <div class="contenedor">
+      Grupo 1
+    </div>
+  </footer>
 
 
   <!-- Zona de scripts -->

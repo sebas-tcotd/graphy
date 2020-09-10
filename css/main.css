@@ -99,6 +99,7 @@ html {
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 *,
@@ -158,7 +159,7 @@ h1 {
 }
 
 .content-header a>img {
-  height: 10rem;
+  height: auto;
   max-width: 100%;
 }
 
@@ -168,6 +169,21 @@ h1 {
 
 .logo-FISI {
   filter: brightness(3.5) grayscale(100);
+}
+
+.logo-SM,
+.logo-FISI {
+  width: 100%;
+}
+
+@media (min-width: 768px){
+  .logo-SM,
+.logo-FISI {
+  width: auto;
+}
+.content-header a>img {
+  height: 10rem;
+}
 }
 
 .grafo-y-pseudo {
@@ -216,6 +232,10 @@ h1 {
   box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
 }
 
+.codigo-pseudo code {
+  background-color: transparent;
+}
+
 #nombre-facultad,
 #nombre-curso,
 #fan-service {
@@ -228,6 +248,7 @@ h1 {
   flex-direction: column;
   align-items: flex-start;
 }
+
 .ingreso-de-datos label {
   font-size: 1.8rem;
   margin-bottom: 1rem;
@@ -249,13 +270,26 @@ h1 {
   border-bottom: 2px solid var(--blanco);
 }
 
+.site-footer {
+  /* background: rgba(255, 255, 255, .37); */
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 2rem;
+  height: 4rem;
+  -webkit-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
 .contenedor {
   margin: auto;
   width: 98%;
-  height: 100vh;
 }
 
 /*
