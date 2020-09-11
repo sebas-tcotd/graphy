@@ -4,14 +4,7 @@ var cy = cytoscape({
   container: document.getElementById("grafo"),
 
   elements: {
-
-    nodes: [
-      //{data: {id: "A"}, position: {x: Math.random(), y: Math.random()}}
-    ],
-
-    /*edges: [
-        {data: {id: "e1", source: "A", target: "A"}}
-    ]*/
+    nodes: [],
   },
 
   style: [{
@@ -32,14 +25,23 @@ var cy = cytoscape({
         'line-color': 'rgb(240, 240, 240)',
         'opacity': '0.5'
       }
+    },
+    {
+      selector: ".resaltado",
+
+      style: {
+        'background-color': '#B721FF',
+        'color': 'white',
+        'line-color': 'rgba(184, 31, 255, 0.5)',
+        'transition-property': 'background-color, line-color',
+        'transition-duration': '0.5s'
+      }
     }
   ],
-
-  layout: {
-    name: "random",
-  }
 });
 
+
+/* Zona de creación del grafo */
 let number_nodes
 let ids = []
 let edges_counter = 1;
@@ -95,7 +97,7 @@ function joinEdges() {
   }
 }
 
-let adyacency_matrix
+let adyacency_matrix;
 
 function createGraph(n_nodes) {
   cy.remove(cy.$());
@@ -110,15 +112,31 @@ function createGraph(n_nodes) {
   cy.fit();
   cy.zoomingEnabled(false);
 }
+// ------------------------------------
 
+/* Zona de animación */
+let i = 0;
+let resaltarSgteElemento = function () {
+  
+  let dfs = cy.elements().dfs({
+    roots: '#1'
+  });
+
+  if (i < dfs.path.length) {
+    dfs.path[i].addClass('resaltado');
+    i++;
+    setTimeout(resaltarSgteElemento, 500);
+  }
+};
+
+/* Zona de captura de eventos */
 var formulario = document.querySelector(".ingreso-de-datos");
 var spanTiempo = document.querySelector("#tiempo-ejecucion");
 let btnFindBridge = document.querySelector("#find-bridges");
 let btnFindCycles = document.querySelector("#find-cycles");
 
+//Evento para crear el grafo
 formulario.addEventListener("submit", () => {
-
-
   number_nodes = parseInt(document.querySelector("#numero-nodos").value);
   //console.clear();
   console.log(`Nodos creados: ${number_nodes}`);
@@ -133,27 +151,32 @@ formulario.addEventListener("submit", () => {
 
     let tiempoInicio = performance.now();
     createGraph(number_nodes);
-    let tiempoFinal = performance.now()
+    let tiempoFinal = performance.now();
 
     let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
     spanTiempo.innerHTML = `Tiempo de ejecución: ${tiempoDeEjecucion / 1000} segundos.`; // Esto para que se muestre en segundos
   }
 });
 
+//Evento para activar el algoritmo de búsqueda de puentes
 btnFindBridge.addEventListener('click', () => {
-  if(!number_nodes){
+  if (!number_nodes) {
     return console.log("No se creó grafo alguno");
   }
+  i = 0;
+  resaltarSgteElemento();
   console.log('Evento de puentes activado');
 });
 
+//Evento para activar el algoritmo de búsqueda de ciclos
 btnFindCycles.addEventListener('click', () => {
-  if(!number_nodes){
+  if (!number_nodes) {
     return console.log("No se creó grafo alguno");
   }
   console.log('Evento de ciclos activado');
 });
 
+//Eventos para cuando el mouse se centre en el div del grafo
 let contenedorGrafo = document.querySelector('#grafo');
 contenedorGrafo.addEventListener('mousedown', function () {
   cy.zoomingEnabled(true);
@@ -161,5 +184,3 @@ contenedorGrafo.addEventListener('mousedown', function () {
 contenedorGrafo.addEventListener('mouseout', function () {
   cy.zoomingEnabled(false);
 })
-
-//cy.fit();
