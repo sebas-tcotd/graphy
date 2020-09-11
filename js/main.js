@@ -37,7 +37,8 @@ var cy = cytoscape({
 
   layout: {
     name: "random",
-  }});
+  }
+});
 
 let number_nodes
 let ids = []
@@ -112,31 +113,52 @@ function createGraph(n_nodes) {
 
 var formulario = document.querySelector(".ingreso-de-datos");
 var spanTiempo = document.querySelector("#tiempo-ejecucion");
+let btnFindBridge = document.querySelector("#find-bridges");
+let btnFindCycles = document.querySelector("#find-cycles");
 
 formulario.addEventListener("submit", () => {
+
+
   number_nodes = parseInt(document.querySelector("#numero-nodos").value);
-  console.clear();
+  //console.clear();
   console.log(`Nodos creados: ${number_nodes}`);
 
-  let tiempoInicio = performance.now();
-  createGraph(number_nodes);
-  let tiempoFinal = performance.now()
+  if (!number_nodes) {
+    createGraph(number_nodes);
+    btnFindCycles.style.opacity = btnFindBridge.style.opacity = '.5';
+    btnFindCycles.style.cursor = btnFindBridge.style.cursor = 'default';
+  } else {
+    btnFindCycles.style.opacity = btnFindBridge.style.opacity = '1';
+    btnFindCycles.style.cursor = btnFindBridge.style.cursor = 'pointer';
 
-  let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
+    let tiempoInicio = performance.now();
+    createGraph(number_nodes);
+    let tiempoFinal = performance.now()
 
+    let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
+    spanTiempo.innerHTML = `Tiempo de ejecución: ${tiempoDeEjecucion / 1000} segundos.`; // Esto para que se muestre en segundos
+  }
+});
 
-  // crearNodos(numeroDeNodos);
-  // crearAristas();
+btnFindBridge.addEventListener('click', () => {
+  if(!number_nodes){
+    return console.log("No se creó grafo alguno");
+  }
+  console.log('Evento de puentes activado');
+});
 
-  spanTiempo.innerHTML = `Tiempo de ejecución: ${tiempoDeEjecucion / 1000} segundos.`; // Esto para que se muestre en segundos
-  
+btnFindCycles.addEventListener('click', () => {
+  if(!number_nodes){
+    return console.log("No se creó grafo alguno");
+  }
+  console.log('Evento de ciclos activado');
 });
 
 let contenedorGrafo = document.querySelector('#grafo');
-contenedorGrafo.addEventListener('mousedown', function(){
+contenedorGrafo.addEventListener('mousedown', function () {
   cy.zoomingEnabled(true);
 });
-contenedorGrafo.addEventListener('mouseout', function(){
+contenedorGrafo.addEventListener('mouseout', function () {
   cy.zoomingEnabled(false);
 })
 
