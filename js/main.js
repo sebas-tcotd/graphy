@@ -1,4 +1,5 @@
 "use strict";
+import * as pseudo from './pseudos.js';
 
 var cy = cytoscape({
   container: document.getElementById("grafo"),
@@ -12,6 +13,7 @@ var cy = cytoscape({
 
       style: {
         "label": "data(id)",
+        'font-family': 'Roboto Condensed, sans-serif',
         "text-halign": 'center',
         'text-valign': 'center',
         'background-color': 'white'
@@ -45,6 +47,7 @@ var cy = cytoscape({
 let number_nodes
 let ids = []
 let edges_counter = 1;
+
 
 function createNodes(number_nodes) {
   for (var i = 0; i < number_nodes; i++) {
@@ -117,7 +120,7 @@ function createGraph(n_nodes) {
 /* Zona de animación */
 let i = 0;
 let resaltarSgteElemento = function () {
-  
+
   let dfs = cy.elements().dfs({
     roots: '#1'
   });
@@ -164,6 +167,7 @@ btnFindBridge.addEventListener('click', () => {
     return console.log("No se creó grafo alguno");
   }
   i = 0;
+  pseudo.pseudoFindBridges();
   resaltarSgteElemento();
   console.log('Evento de puentes activado');
 });
@@ -173,6 +177,7 @@ btnFindCycles.addEventListener('click', () => {
   if (!number_nodes) {
     return console.log("No se creó grafo alguno");
   }
+  pseudo.pseudoFindCycles();
   console.log('Evento de ciclos activado');
 });
 

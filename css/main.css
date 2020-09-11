@@ -27,6 +27,8 @@ html {
  * Customize the background color to match your design.
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto+Mono:wght@300;400&display=swap');
+
 ::-moz-selection {
   background: #b3d4fc;
   text-shadow: none;
@@ -186,19 +188,22 @@ h1 {
   width: 100%;
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
+
   .logo-SM,
-.logo-FISI {
-  width: auto;
-}
-.content-header a>img {
-  height: 10rem;
-}
+  .logo-FISI {
+    width: auto;
+  }
+
+  .content-header a>img {
+    height: 10rem;
+  }
 }
 
 .grafo-y-pseudo {
   margin: auto;
-  height: 80vh;
+  /* height: 80vh; */
+  min-height: 60rem;
 }
 
 @media (min-width: 768px) {
@@ -243,7 +248,12 @@ h1 {
 }
 
 .codigo-pseudo code {
+  font-family: 'Roboto Mono', monospace;
+  max-height: 500px;
+  overflow-y: auto;
   background-color: transparent;
+  font-size: 1.2rem;
+  transition: all .5s ease;
 }
 
 #nombre-facultad,
