@@ -1,5 +1,5 @@
 "use strict";
-import * as pseudo from './pseudos.js';
+//import * as pseudo from './pseudos.js';
 
 var cy = cytoscape({
   container: document.getElementById("grafo"),
@@ -23,9 +23,11 @@ var cy = cytoscape({
       selector: "edge",
 
       style: {
-        "curve-style": "bezier",
+        //"curve-style": "bezier",
         'line-color': 'rgb(240, 240, 240)',
-        'opacity': '0.5'
+        'opacity': '0.5',
+        //'target-arrow-shape': 'triangle',
+        //'target-arrow-color': 'white'
       }
     },
     {
@@ -54,7 +56,9 @@ function createNodes(number_nodes) {
     cy.add({
       nodes: [{
         data: {
-          id: `${i + 1}`
+          id: `${i}`,
+          disc: [],
+          low: []
         },
         position: {
           x: Math.random() * 500,
@@ -68,7 +72,7 @@ function createNodes(number_nodes) {
 
 function fillIdsArray() {
   for (var i = 0; i < number_nodes; i++) {
-    ids[i] = i + 1;
+    ids[i] = i;
   }
 }
 
@@ -80,7 +84,7 @@ function joinEdges() {
 
   for (var i = 0; i < number_nodes; i++) {
     random = ids[Math.floor(Math.random() * ids.length)]
-    if (adyacency_matrix[current_id - 1][random - 1] == 0) {
+    if (adyacency_matrix[current_id][random] == 0) {
       cy.add({
         edges: [{
           data: {
@@ -92,7 +96,7 @@ function joinEdges() {
         }]
       })
 
-      adyacency_matrix[current_id - 1][random - 1] = 1;
+      adyacency_matrix[current_id][random] = 1;
       edges_counter++;
     }
     current_id = random;
@@ -100,7 +104,7 @@ function joinEdges() {
   }
 }
 
-let adyacency_matrix;
+var adyacency_matrix;
 
 function createGraph(n_nodes) {
   cy.remove(cy.$());
@@ -122,7 +126,8 @@ let i = 0;
 let resaltarSgteElemento = function () {
 
   let dfs = cy.elements().dfs({
-    roots: '#1'
+    roots: '#1',
+    directed: true
   });
 
   if (i < dfs.path.length) {
@@ -131,6 +136,67 @@ let resaltarSgteElemento = function () {
     setTimeout(resaltarSgteElemento, 500);
   }
 };
+// ------------------------------------------
+
+/* Zona de algoritmos del proyecto */
+
+function puenteUtil(u, visitado, disc, low, padres, time) {
+  //let time = 0;
+  //let _u = parseInt(u.id());
+  let adyacentes = new Array();
+  visitado[u] = true;
+  disc[u] = low[u] = ++time;
+
+  cy.$(`#${u}`).neighborhood(cy.nodes()).forEach((e, i) => {
+    adyacentes[i] = parseInt(e.id());
+  });
+
+  let i = 0;
+  let v = 0;
+  let n = adyacentes.length;
+  while (i < n) {
+    v = adyacentes[i];
+    if (!visitado[v]) {
+      padres[v] = u;
+      puenteUtil(v, visitado, disc, low, padres, time);
+      low[u] = Math.min(low[u], low[v]);
+
+      if (low[v] > disc[u]){
+        console.log("Existe un puente entre:",u,v);
+      }
+    } else if(v != padres[u]){
+      low[u] = Math.min(low[u], disc[v])
+    }
+    i++;
+  }
+}
+
+function pseudoFindBridges() {
+  let nodos = cy.nodes()
+  let visitado = [],
+    disc = [],
+    low = [],
+    padres = [];
+  for (let i = 0; i < nodos.length; i++) {
+    padres[i] = null;
+    visitado[i] = false;
+  }
+  for (let i = 0; i < nodos.length; i++) {
+    if (!visitado[i]) {
+      let time = 0;
+      puenteUtil(i, visitado, disc, low, padres, time);
+    }
+  }
+
+  let code = document.querySelector('.codigo-pseudo code');
+  code.innerHTML = `Acción Principal Bridges`;
+}
+
+function pseudoFindCycles() {
+  let code = document.querySelector('.codigo-pseudo code');
+  code.innerHTML = `Acción Principal Cycles`;
+}
+// ------------------------------------------
 
 /* Zona de captura de eventos */
 var formulario = document.querySelector(".ingreso-de-datos");
@@ -167,9 +233,10 @@ btnFindBridge.addEventListener('click', () => {
     return console.log("No se creó grafo alguno");
   }
   i = 0;
-  pseudo.pseudoFindBridges();
-  resaltarSgteElemento();
   console.log('Evento de puentes activado');
+  debugger;
+  pseudoFindBridges();
+  //resaltarSgteElemento();
 });
 
 //Evento para activar el algoritmo de búsqueda de ciclos
@@ -177,7 +244,7 @@ btnFindCycles.addEventListener('click', () => {
   if (!number_nodes) {
     return console.log("No se creó grafo alguno");
   }
-  pseudo.pseudoFindCycles();
+  pseudoFindCycles();
   console.log('Evento de ciclos activado');
 });
 
