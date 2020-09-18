@@ -104,8 +104,8 @@ function joinEdges() {
       })
 
       adyacency_matrix[current_id][random] = 1;
-      adj_list[current_id].push(current_id);
-      adj_list[random].push(random);
+      adj_list[current_id].push(random);
+      adj_list[random].push(current_id);
       edges_counter++;
     }
     current_id = random;
@@ -209,12 +209,12 @@ function puenteUtil(u, visitado, disc, low, padres, time) {
 let cycleNumber = 0;
 
 let cycles = [];
-for (let i = 0; i < N; i++) {
+for (let i = 0; i < 30000; i++) {
   cycles.push([]);
 }
 
 function dfsCycle(u, p, color, mark, par) {
-  debugger;
+  //debugger;
   let cur = NaN;
 
   if (color[u] === 2) {
@@ -266,9 +266,9 @@ function imprimirCiclo(n, mark) {
   }
 
   for (i = 1; i <= cycleNumber; i++) {
-    console.log(cycles[i].length)
+    //console.log(cycles[i].length)
     if (cycles[i].length == n) {
-      cycles.forEach(x => console.log(x));
+      cycles[i].forEach(x => console.log(x));
     }
   }
 }
