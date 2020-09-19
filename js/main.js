@@ -49,7 +49,6 @@ var cy = cytoscape({
 let number_nodes;
 let N = 100000;
 let ids = [];
-let edges_counter = 1;
 
 
 
@@ -81,9 +80,7 @@ function fillIdsArray() {
 var adj_list = [];
 
 function joinEdges() {
-  for (let i = 0; i < N; i++) {
-    adj_list[i] = [];
-  }
+
   let current_id;
   let random;
   random = ids[Math.floor(Math.random() * ids.length)]
@@ -95,7 +92,6 @@ function joinEdges() {
       cy.add({
         edges: [{
           data: {
-            //id: `${"e" + edges_counter}`,
             id: `e${current_id}to${random}`,
             source: `${current_id}`,
             target: `${random}`
@@ -104,9 +100,9 @@ function joinEdges() {
       })
 
       adyacency_matrix[current_id][random] = 1;
+      adyacency_matrix[random][current_id] = 1;
       adj_list[current_id].push(random);
       adj_list[random].push(current_id);
-      edges_counter++;
     }
     current_id = random;
     ids.splice(ids.indexOf(random), 1);
@@ -115,12 +111,16 @@ function joinEdges() {
 
 var adyacency_matrix;
 
-function createGraph(n_nodes) {
+function createGraph(n_nodes, complexity) {
   cy.remove(cy.$());
   createNodes(n_nodes);
   adyacency_matrix = Array(n_nodes).fill(null).map(() => Array(n_nodes).fill(0));
+  adj_list.length = 0;
+  for (let i = 0; i < N; i++) {
+    adj_list[i] = [];
+  }
 
-  for (var i = 0; i < 1; i++) {
+  for (var i = 0; i < complexity; i++) {
     fillIdsArray();
     joinEdges();
   }
@@ -206,15 +206,18 @@ function puenteUtil(u, visitado, disc, low, padres, time) {
 }
 
 //Algoritmos para hallar los ciclos de longitud n de un grafo
-let cycleNumber = 0;
+let cycleNumber;
 
 let cycles = [];
-for (let i = 0; i < 30000; i++) {
-  cycles.push([]);
-}
+
 
 function dfsCycle(u, p, color, mark, par) {
   //debugger;
+  cycleNumber = 0;
+  cycles.length = 0;
+  for (let i = 0; i < 30000; i++) {
+    cycles.push([]);
+  }
   let cur = NaN;
 
   if (color[u] === 2) {
@@ -274,6 +277,7 @@ function imprimirCiclo(n, mark) {
 }
 
 function pseudoFindCycles(n) {
+  
   let u = parseInt(cy.nodes().id());
   let color = [];
   color.length = N;
@@ -281,6 +285,7 @@ function pseudoFindCycles(n) {
   for (let i = 0; i < N; i++) {
     mark.push(0);
   }
+  debugger;
   let par = [];
   par.length = N;
 
@@ -317,7 +322,7 @@ formulario.addEventListener("submit", () => {
     btnFindCycles.style.cursor = btnFindBridge.style.cursor = 'pointer';
 
     let tiempoInicio = performance.now();
-    createGraph(number_nodes);
+    createGraph(number_nodes, 3);
     let tiempoFinal = performance.now();
 
     let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
