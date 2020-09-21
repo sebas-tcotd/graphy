@@ -268,8 +268,7 @@ function imprimirCiclo(n, mark) {
     }
   }
 
-  for (i = 1; i <= cycleNumber; i++) {
-    //console.log(cycles[i].length)
+  for (i = 0; i <= cycleNumber; i++) {
     if (cycles[i].length == n) {
       cycles[i].forEach(x => console.log(x));
     }
@@ -285,7 +284,7 @@ function pseudoFindCycles(n) {
   for (let i = 0; i < N; i++) {
     mark.push(0);
   }
-  debugger;
+  
   let par = [];
   par.length = N;
 
