@@ -26,31 +26,52 @@
 </head>
 
 <body>
+  <header class="content-header">
+
+    <a href="http://www.unmsm.edu.pe/">
+      <img src="/img/sanMarcosLogo.png" alt="Logo San Marcos" class="logo-SM">
+    </a>
+    <div class="titulo">
+      <h1 id="nombre-facultad">Facultad de Ingeniería de Sistemas e Informática</h1>
+      <h2 id="nombre-curso">Estructura de datos</h2>
+      <h3 id="fan-service">Año de la creación de la escuela de Computación Científica</h3>
+    </div>
+    <a href="https://sistemas.unmsm.edu.pe/">
+      <img src="/img/fisiLogo.png" alt="Logo FISI" class="logo-FISI">
+    </a>
+  </header>
+  <div class="opciones">
+    <div class="ingreso-de-datos">
+      <form onsubmit="return false;">
+        <legend>Opciones básicas</legend>
+        <label>Número de nodos: </label>
+        <input type="number" id="numero-nodos" min="0" value="0">
+        <div class="botones">
+          <input type="submit" value="Generar grafo" class="button">
+          <div class="button" id="find-bridges">Hallar puentes</div>
+          <div class="button" id="find-cycles">Hallar ciclos</div>
+        </div>
+      </form>
+    </div>
+    <div class="opciones-avanzadas">
+      <form onsubmit="return false;">
+        <legend>Opciones avanzadas</legend>
+        <label for="complexity">Complejidad</label>
+        <input type="range" name="complexity" min="1" max="10" id="complexity">
+        <legend>Layout</legend>
+        <div class="layout-options">
+          <button class="button btn-small" id="random">Random</button>
+          <button class="button btn-small" id="concentric">Concéntrico</button>
+          <button class="button btn-small" id="cuadricula">Cuadrícula</button>
+          <button class="button btn-small" id="circle">Circular</button>
+          <button class="button btn-small" id="breadthfirst">BDS</button>
+          <button class="button btn-small" id="cose">COSE</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="contenedor">
-    <header class="content-header">
 
-      <a href="http://www.unmsm.edu.pe/">
-        <img src="/img/sanMarcosLogo.png" alt="Logo San Marcos" class="logo-SM">
-      </a>
-      <div class="titulo">
-        <h1 id="nombre-facultad">Facultad de Ingeniería de Sistemas e Informática</h1>
-        <h2 id="nombre-curso">Estructura de datos</h2>
-        <h3 id="fan-service">Año de la creación de la escuela de Computación Científica</h3>
-      </div>
-      <a href="https://sistemas.unmsm.edu.pe/">
-        <img src="/img/fisiLogo.png" alt="Logo FISI" class="logo-FISI">
-      </a>
-    </header>
-
-    <form class="ingreso-de-datos" onsubmit="return false;">
-      <label>Ingrese la cantidad de nodos a generar: </label>
-      <input type="number" id="numero-nodos" min="0" value="0">
-      <div class="botones">
-        <input type="submit" value="Generar grafo" class="button">
-        <div class="button" id="find-bridges">Hallar puentes</div>
-        <div class="button" id="find-cycles">Hallar ciclos</div>
-      </div>
-    </form>
 
     <div class="grafo-y-pseudo">
       <div id="contenedor-grafo">

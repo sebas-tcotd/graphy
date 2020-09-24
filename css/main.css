@@ -150,6 +150,13 @@ body {
   color: rgba(0, 0, 0, 0.87);
 }
 
+.btn-small {
+  padding: .5rem 1rem;
+  font-size: small;
+  border-radius: .25rem;
+  border: 1px solid white;
+}
+
 #find-bridges,
 #find-cycles {
   margin-left: .5rem;
@@ -162,6 +169,72 @@ body {
 
 h1 {
   font-size: 2.4rem;
+}
+
+header {
+  width: 100%;
+  -webkit-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  z-index: 1000;
+}
+
+.opciones {
+  margin: 0 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  background-color: rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  -moz-box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+  box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.52);
+}
+
+.opciones-avanzadas {
+  padding: 2rem 3rem;
+}
+
+.layout-options {
+  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+#complexity {
+  -webkit-appearance: none;
+  width: 50%;
+  background: transparent;
+}
+
+#complexity::-webkit-slider-runnable-track {
+  height: .84rem;
+  cursor: pointer;
+  background: rgba(186, 37, 255, 0.35);
+  border-radius: 1.3px;
+  border: 0.2px solid white;
+}
+
+#complexity::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 1.6rem;
+  width: 1.6rem;
+  border-radius: 5rem;
+  background: #ffffff;
+  cursor: pointer;
+  margin-top: -.5rem;
+}
+
+#complexity:focus {
+  outline: none;
+}
+
+#complexity::-ms-track {
+  width: 100%;
+  cursor: pointer;
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
 }
 
 .content-header {
@@ -263,7 +336,7 @@ h1 {
 }
 
 .ingreso-de-datos {
-  margin: 2rem 0;
+  padding: 2rem 3rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

@@ -276,7 +276,7 @@ function imprimirCiclo(n, mark) {
 }
 
 function pseudoFindCycles(n) {
-  
+
   let u = parseInt(cy.nodes().id());
   let color = [];
   color.length = N;
@@ -284,7 +284,7 @@ function pseudoFindCycles(n) {
   for (let i = 0; i < N; i++) {
     mark.push(0);
   }
-  
+
   let par = [];
   par.length = N;
 
@@ -301,6 +301,7 @@ function pseudoFindCycles(n) {
 
 /* Zona de captura de eventos */
 var formulario = document.querySelector(".ingreso-de-datos");
+let complexity = document.querySelector('#complexity');
 var spanTiempo = document.querySelector("#tiempo-ejecucion-grafo");
 let tiempoPuentes = document.querySelector('#tiempo-puentes');
 let btnFindBridge = document.querySelector("#find-bridges");
@@ -308,6 +309,8 @@ let btnFindCycles = document.querySelector("#find-cycles");
 
 //Evento para crear el grafo
 formulario.addEventListener("submit", () => {
+  let n = Number(complexity.value);
+
   number_nodes = parseInt(document.querySelector("#numero-nodos").value);
   //console.clear();
   console.log(`Nodos creados: ${number_nodes}`);
@@ -321,7 +324,7 @@ formulario.addEventListener("submit", () => {
     btnFindCycles.style.cursor = btnFindBridge.style.cursor = 'pointer';
 
     let tiempoInicio = performance.now();
-    createGraph(number_nodes, 3);
+    createGraph(number_nodes, n);
     let tiempoFinal = performance.now();
 
     let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
@@ -362,4 +365,45 @@ contenedorGrafo.addEventListener('mousedown', function () {
 });
 contenedorGrafo.addEventListener('mouseout', function () {
   cy.zoomingEnabled(false);
+})
+
+//Eventos para los layouts
+let random = document.getElementById('random');
+let circle = document.getElementById('circle');
+let concentric = document.getElementById('concentric');
+let bds = document.getElementById('breadthfirst');
+let grid = document.getElementById('cuadricula');
+let cose = document.getElementById('cose');
+
+let maquetado = (lay) => {
+  cy.zoomingEnabled(true);
+  cy.layout({
+    name: lay
+  }).run();
+  cy.fit();
+  cy.zoomingEnabled(false);
+}
+
+random.addEventListener('click', () => {
+  maquetado('random');
+})
+
+circle.addEventListener('click', () => {
+  maquetado('circle')
+});
+
+concentric.addEventListener('click', () => {
+  maquetado('concentric');
+});
+
+bds.addEventListener('click', () => {
+  maquetado('breadthfirst');
+});
+
+grid.addEventListener('click', () => {
+  maquetado('grid');
+})
+
+cose.addEventListener('click', () => {
+  maquetado('cose');
 })
