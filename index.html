@@ -18,6 +18,7 @@
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="/css/normalize.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/atom-one-light.css">
 
@@ -57,7 +58,7 @@
       <form onsubmit="return false;">
         <legend>Opciones avanzadas</legend>
         <label for="complexity">Complejidad</label>
-        <input type="range" name="complexity" min="1" max="10" id="complexity">
+        <input type="range" name="complexity" min="1" max="10" value="1" id="complexity">
         <legend>Layout</legend>
         <div class="layout-options">
           <button class="button btn-small" id="random">Random</button>
@@ -75,7 +76,11 @@
 
     <div class="grafo-y-pseudo">
       <div id="contenedor-grafo">
-        <div id="grafo"></div>
+        <div id="grafo">
+
+        </div>
+        <span class="material-icons img-center">filter_center_focus</span>
+        <span class="material-icons fullscreen">fullscreen</span>
       </div>
 
       <div id="pseudocodigo">

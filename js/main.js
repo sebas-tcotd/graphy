@@ -40,6 +40,17 @@ var cy = cytoscape({
         'transition-property': 'background-color, line-color',
         'transition-duration': '0.5s'
       }
+    },
+    {
+      selector: ".ciclos",
+
+      style: {
+        'background-color': '#FF8C3B',
+        'color': 'black',
+        "line-color": 'rgba(255, 140, 59, 0.5)',
+        'transition-property': 'background-color, line-color',
+        'transition-duration': '0.5s'
+      }
     }
   ],
 });
@@ -50,7 +61,11 @@ let number_nodes;
 let N = 100000;
 let ids = [];
 
-
+function centrar() {
+  cy.zoomingEnabled(true);
+  cy.fit();
+  cy.zoomingEnabled(false);
+}
 
 function createNodes(number_nodes) {
   for (var i = 0; i < number_nodes; i++) {
@@ -124,9 +139,7 @@ function createGraph(n_nodes, complexity) {
     fillIdsArray();
     joinEdges();
   }
-  cy.zoomingEnabled(true);
-  cy.fit();
-  cy.zoomingEnabled(false);
+  centrar();
 }
 // ------------------------------------
 
@@ -145,8 +158,22 @@ let resaltarSgteElemento = function () {
   }
 };
 
-let resaltarElemento = (ele) => {
-  cy.$(ele).addClass('resaltado');
+let resaltarElemento = (ele, clase = 'resaltado') => {
+  cy.$(ele).addClass(clase);
+}
+
+let resaltarCiclo = () => {
+  let cicloColor = cycles[1];
+  let aristas = [];
+  cy.edges().forEach((e) => {
+    aristas.push(e.id());
+  })
+  for(let i = 0; i < cycles[1].length; i++){
+    resaltarElemento(`#${aristas[i]}`, 'ciclos');
+  }
+  for(let i of cicloColor){
+    cy.$(`#${i}`).addClass('ciclos');
+  }
 }
 // ------------------------------------------
 
@@ -294,6 +321,7 @@ function pseudoFindCycles(n) {
 
   dfsCycle(u, 0, color, mark, par);
   imprimirCiclo(n, mark);
+  resaltarCiclo();
   let code = document.querySelector('.codigo-pseudo code');
   code.innerHTML = `Acción Principal Cycles`;
 }
@@ -349,10 +377,13 @@ btnFindBridge.addEventListener('click', () => {
 
 //Evento para activar el algoritmo de búsqueda de ciclos
 btnFindCycles.addEventListener('click', () => {
+  let c = Number(complexity.value);
   if (!number_nodes) {
     return console.log("No se creó grafo alguno");
   }
-  //debugger;
+  if(c > 1){
+    return alert("Lamentablemente, este es un problema NP-Completo");
+  }
   let n = parseInt(prompt('Ingrese la longitud del ciclo:', 0));
   pseudoFindCycles(n);
   console.log('Evento de ciclos activado');
@@ -402,8 +433,41 @@ bds.addEventListener('click', () => {
 
 grid.addEventListener('click', () => {
   maquetado('grid');
-})
+});
 
 cose.addEventListener('click', () => {
   maquetado('cose');
+});
+
+
+//Evento para agrandar el cuadro de grafos
+let viewport = document.querySelector('.fullscreen');
+let isFull = viewport.innerHTML;
+let divGrafo = document.querySelector('#grafo div');
+
+viewport.addEventListener('click', () => {
+  let grafoYpseudo = document.querySelector('.grafo-y-pseudo');
+
+  //debugger;  
+  if (isFull === 'fullscreen') {
+    grafoYpseudo.style.display = 'block';
+    viewport.innerHTML = isFull = "fullscreen_exit";
+  } else {
+    grafoYpseudo.style.display = 'grid';
+    divGrafo.style.width = "100%";
+    viewport.innerHTML = isFull = "fullscreen";
+
+  }
+
+  setTimeout(function () {
+    cy.reset();
+    console.log('Acción')
+  }, 3000);
+
+});
+
+//Evento para centrar el grafo
+let centre = document.querySelector('.img-center');
+centre.addEventListener('click', () => {
+  centrar();
 })
