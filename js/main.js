@@ -127,6 +127,8 @@ function joinEdges() {
 var adyacency_matrix;
 
 function createGraph(n_nodes, complexity) {
+  tiempoPuentes.style.display = tiempoCiclos.style.display = 'none';
+  code.innerHTML = '';
   cy.remove(cy.$());
   createNodes(n_nodes);
   adyacency_matrix = Array(n_nodes).fill(null).map(() => Array(n_nodes).fill(0));
@@ -162,25 +164,15 @@ let resaltarElemento = (ele, clase = 'resaltado') => {
   cy.$(ele).addClass(clase);
 }
 
-let resaltarCiclo = () => {
-  let cicloColor = cycles[1];
-  let aristas = [];
-  cy.edges().forEach((e) => {
-    aristas.push(e.id());
-  })
-  for(let i = 0; i < cycles[1].length; i++){
-    resaltarElemento(`#${aristas[i]}`, 'ciclos');
-  }
-  for(let i of cicloColor){
-    cy.$(`#${i}`).addClass('ciclos');
-  }
-}
+
 // ------------------------------------------
 
 /* Zona de algoritmos del proyecto */
 
 // Algoritmos para hallar los puentes del grafo
+let code = document.querySelector('.codigo-pseudo code');
 function pseudoFindBridges() {
+  tiempoPuentes.style.display = 'block';
   let nodos = cy.nodes()
   let visitado = [],
     disc = [],
@@ -197,8 +189,8 @@ function pseudoFindBridges() {
     }
   }
 
-  let code = document.querySelector('.codigo-pseudo code');
-  code.innerHTML = `Acción Principal Bridges`;
+  code = document.querySelector('.codigo-pseudo code');
+  code.innerHTML = pseudocodigoPuentes;
 }
 
 function puenteUtil(u, visitado, disc, low, padres, time) {
@@ -239,6 +231,7 @@ let cycles = [];
 
 
 function dfsCycle(u, p, color, mark, par) {
+  tiempoCiclos.style.display = 'block';
   //debugger;
   cycleNumber = 0;
   cycles.length = 0;
@@ -297,7 +290,9 @@ function imprimirCiclo(n, mark) {
 
   for (i = 0; i <= cycleNumber; i++) {
     if (cycles[i].length == n) {
-      cycles[i].forEach(x => console.log(x));
+      cycles[i].forEach(x => {
+        console.log(x);
+      });
     }
   }
 }
@@ -321,9 +316,29 @@ function pseudoFindCycles(n) {
 
   dfsCycle(u, 0, color, mark, par);
   imprimirCiclo(n, mark);
-  resaltarCiclo();
-  let code = document.querySelector('.codigo-pseudo code');
-  code.innerHTML = `Acción Principal Cycles`;
+  resaltarCiclo(n);
+  code = document.querySelector('.codigo-pseudo code');
+  code.innerHTML = pseudocodigoCiclos;
+
+}
+
+let resaltarCiclo = (n) => {
+  let cicloColor = cycles[1];
+  let aristas = [];
+
+  if(cycles[1].length === n){
+    cy.edges().forEach((e) => {
+      aristas.push(e.id());
+    })
+    for (let i = 0; i < cycles[1].length; i++) {
+      resaltarElemento(`#${aristas[i]}`, 'ciclos');
+    }
+    for (let i of cicloColor) {
+      cy.$(`#${i}`).addClass('ciclos');
+    }
+  }else{
+    alert("No se pudo encontrar un ciclo con la longitud solicitada.");
+  }
 }
 // ------------------------------------------
 
@@ -332,8 +347,10 @@ var formulario = document.querySelector(".ingreso-de-datos");
 let complexity = document.querySelector('#complexity');
 var spanTiempo = document.querySelector("#tiempo-ejecucion-grafo");
 let tiempoPuentes = document.querySelector('#tiempo-puentes');
+let tiempoCiclos = document.querySelector('#tiempo-ciclos');
 let btnFindBridge = document.querySelector("#find-bridges");
 let btnFindCycles = document.querySelector("#find-cycles");
+let limpio = document.querySelector('#limpito');
 
 //Evento para crear el grafo
 formulario.addEventListener("submit", () => {
@@ -347,16 +364,22 @@ formulario.addEventListener("submit", () => {
     createGraph(number_nodes);
     btnFindCycles.style.opacity = btnFindBridge.style.opacity = '.5';
     btnFindCycles.style.cursor = btnFindBridge.style.cursor = 'default';
+    limpio.style.display = 'block';
+    tiempoPuentes.style.display = tiempoCiclos.style.display = spanTiempo.style.display = 'none';
+    
   } else {
     btnFindCycles.style.opacity = btnFindBridge.style.opacity = '1';
     btnFindCycles.style.cursor = btnFindBridge.style.cursor = 'pointer';
+
+    limpio.style.display = 'none';
 
     let tiempoInicio = performance.now();
     createGraph(number_nodes, n);
     let tiempoFinal = performance.now();
 
+    
     let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
-    spanTiempo.innerHTML = `Tiempo de ejecución: ${(tiempoDeEjecucion / 1000).toPrecision(2)} segundos.`; // Esto para que se muestre en segundos
+    spanTiempo.innerHTML = `Creación del grafo: ${(tiempoDeEjecucion / 1000).toPrecision(2)} segundos.`; // Esto para que se muestre en segundos
   }
 });
 
@@ -371,7 +394,7 @@ btnFindBridge.addEventListener('click', () => {
   pseudoFindBridges();
   let tiempoFinal = performance.now();
   let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
-  tiempoPuentes.innerHTML = `Tiempo de ejecución para los puentes: ${(tiempoDeEjecucion / 1000).toPrecision(2)} segundos.`;
+  tiempoPuentes.innerHTML = `Algoritmo de puentes: ${(tiempoDeEjecucion / 1000).toPrecision(2)} segundos.`;
   //resaltarSgteElemento();
 });
 
@@ -381,11 +404,18 @@ btnFindCycles.addEventListener('click', () => {
   if (!number_nodes) {
     return console.log("No se creó grafo alguno");
   }
-  if(c > 1){
+  if (c > 1) {
     return alert("Lamentablemente, este es un problema NP-Completo");
   }
   let n = parseInt(prompt('Ingrese la longitud del ciclo:', 0));
+
+  let tiempoInicio = performance.now()
   pseudoFindCycles(n);
+  let tiempoFinal = performance.now();
+
+  let tiempoDeEjecucion = tiempoFinal - tiempoInicio;
+  tiempoCiclos.innerHTML = `Algoritmo de ciclos: ${(tiempoDeEjecucion / 1000).toPrecision(2)} segundos.`;
+
   console.log('Evento de ciclos activado');
 });
 
@@ -471,3 +501,117 @@ let centre = document.querySelector('.img-center');
 centre.addEventListener('click', () => {
   centrar();
 })
+
+/* ------------------------------------------ */
+
+/* Pseudocódigos */
+
+let pseudocodigoCiclos =
+  `Acción DFS_Cycle(Entero u, Entero p, Entero color[], Entero Mark, Entero par[])
+    DV
+      Entero cur
+    Inicio
+      Si(color[u] = 2) entonces
+        Retornar
+      FinSi
+      
+      Si(color[u] = 1) entonces
+        cycleNumber <- cycleNumber + 1
+        cur <- p
+        mark[cur] <- cycleNumber
+        
+        Mientras (cur != u) hacer
+				  cur <- par[cur]
+				  Mark[cur] <- cyclenumber
+        FinMientras
+        
+			  Retornar;
+      FinSi
+      
+      par[u] <- p
+      color[u] <- 1
+
+      Para cada v en graph[u] hacer
+        Si v = par[u] hacer
+          continuar
+        FinSi
+
+        DFS_Cycle(v, u, color, mark, par)
+      FinPara
+
+      Color[u] <- 2
+    Fin
+
+  Acción imprimirCiclo(Entero e, Boolean mark[])
+    DV
+      Entero i
+      Entero aristaAux
+    Inicio
+      Para i desde 1 hasta e hacer
+        Si mark[i] != 0 entonces
+          cycles[mark[i]].push(i)
+        FinSi
+      FinPara
+
+      Para i desde 1 hasta cycleNumber hacer
+        Si(cycles[i].length = n) entonces
+          Para cada x en cycles[i] hacer 
+            Retornar x
+          FinPara
+        FinSi
+      FinPara
+    Fin
+`;
+
+let pseudocodigoPuentes = 
+`Acción Principal Puente()
+  DV
+    Booleano visitado[]
+    Entero disc[], low[], padres[], time
+
+  Inicio
+    time <- 0
+    Para i desde 1 hasta nVertices hacer
+      padres[i] <- nulo
+      visitado[i] <- falso
+    FinPara
+
+    Para i desde 0 hasta nVertices hacer
+      Si visitado[i] = falso entonces
+        puenteUtil(i, visitado, disc, low, padres, time)
+      FinSi
+    FinPara
+  Fin
+
+Acción puenteUtil(Entero u, Booleano visitado[], Entero disc[], Entero low[], Entero padres[], Entero time)
+  DV
+    Entero adyacentes[], i, v
+  Inicio
+    visitado[u] <- verdadero
+    disc[u] <- ++time
+    low[u] <- disc[u]
+    adyacentes[n] <- {nodos adyacentes de u}
+    i <- 0
+    v <- 0
+
+    Mientras i < n hacer 
+      v <- adyacentes[i]
+
+      Si !visitado[u] entonces
+        padres[v] <- u
+        puenteUtil(v, visitado, disc, low, padres, time)
+        low[u] <- MÍNIMO(low[u], disc[u])
+
+        Si low[v] > disc[u] entonces
+          Escribir (u, v) // Existe un puente entre u y v
+        FinSI
+      Sino
+        Si v != padres[v] entonces
+          low[u] <- MÍNIMO(low[u], disc[v])
+        FinSi
+      FinSi
+
+      i <- i + 1
+    FinMientras
+Fin
+`;
