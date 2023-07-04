@@ -4,7 +4,7 @@ function App() {
   return (
     <main className="bg-gradient-to-tr from-[#2B3745] to-[#3A1B6C] | min-h-screen | flex flex-col">
       <TopBar />
-      <GraphView />
+      <GraphView numberOfNodes={5} />
       <BottomBar />
     </main>
   );
