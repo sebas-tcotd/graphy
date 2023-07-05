@@ -1,50 +1,37 @@
 import React, { useRef, useEffect } from "react";
 import cytoscape from "cytoscape";
 import { GraphViewProps } from "./types";
+import { createGraphElementsCollection } from "../../utils";
 
 export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
-  const cytoscapeReference = useRef<cytoscape.Core | null>(null);
+  const graphDivRef = useRef<HTMLDivElement | null>(null);
+  const cyRef = useRef<cytoscape.Core | null>(null);
 
   useEffect(() => {
-    if (!cytoscapeReference.current) {
-      cytoscapeReference.current = cytoscape();
-    }
+    if (numberOfNodes <= 0) return;
 
-    const cy = cytoscapeReference.current;
-
-    cy.elements().remove();
-
-    for (let i = 0; i < numberOfNodes; i++) {
-      cy.add({ group: "nodes", data: { id: `n${i}` } });
-    }
-
-    cy.nodes().forEach((node) => {
-      const sourceNodeId = node.id();
-
-      cy.nodes().forEach((targetNode) => {
-        const targetNodeId = targetNode.id();
-
-        if (sourceNodeId !== targetNodeId) {
-          const random = Math.random();
-
-          if (random <= 0.5) {
-            cy.add({
-              group: "edges",
-              data: { source: sourceNodeId, target: targetNodeId },
-            });
-          }
-        }
-      });
+    cyRef.current = cytoscape({
+      container: graphDivRef.current,
+      elements: createGraphElementsCollection(numberOfNodes),
     });
 
-    cy.layout({ name: "circle" }).run();
-  }, [numberOfNodes]);
+    cyRef.current.layout({ name: "circle", animate: true }).run();
+  }, [numberOfNodes, graphDivRef]);
 
   return (
-    <div className="flex items-center px-4 text-center | flex-1">
-      <span className="text-white/60 text-sm">
-        Click on the "Generate" button to create a random graph!
-      </span>
+    <div className="flex flex-col items-center justify-center | flex-1 | px-4 text-center">
+      {numberOfNodes <= 0 ? (
+        <span className="text-white/60 text-sm">
+          Click on the "Generate" button to create a random graph!
+        </span>
+      ) : (
+        <div
+          id="graph"
+          className="w-full"
+          ref={graphDivRef}
+          style={{ height: "calc(100% - 3.75rem)" }}
+        />
+      )}
     </div>
   );
 };
