@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import cytoscape from "cytoscape";
 import { GraphViewProps } from "./types";
-import { createGraphElementsCollection } from "../../utils";
+import { createGraphElementsCollection, setGraphStyle } from "../../utils";
+import { ThemeOptions } from "../../enums";
 
 export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
   const graphDivRef = useRef<HTMLDivElement | null>(null);
@@ -13,6 +14,7 @@ export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
     cyRef.current = cytoscape({
       container: graphDivRef.current,
       elements: createGraphElementsCollection(numberOfNodes),
+      style: setGraphStyle(ThemeOptions.DARK),
     });
 
     cyRef.current.layout({ name: "circle", animate: true }).run();

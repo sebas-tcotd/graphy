@@ -1,13 +1,21 @@
 import NumbersIcon from "../../assets/numbers.svg";
 import LayoutsIcon from "../../assets/layouts.svg";
 import FormulaIcon from "../../assets/formula.svg";
+import { buttonClasses } from "./classes";
+import { BottomBarProps } from "./types";
 
-export const BottomBar = () => {
+export const BottomBar: React.FC<BottomBarProps> = ({ onGenerate }) => {
+  const handleGenerateButton = () => {
+    const numberOfNodes = Math.floor(Math.random() * 20);
+    onGenerate(numberOfNodes);
+  };
+
   return (
     <div className="flex items-center gap-10 justify-between | flex-initial | px-4 py-2 | border-t border-t-white | bg-white/10 backdrop-blur-sm ">
       <button
         type="button"
-        className="px-4 py-2 text-white font-bold text-sm rounded-md bg-gradient-to-tr from-[#1380FF] to-[#9B20D4] hover:bg-gradient-to-bl hover:to-[#9B20D4] hover:from-[#1380FF] | hover:transition-all"
+        onClick={handleGenerateButton}
+        className={buttonClasses}
       >
         Generate
       </button>

@@ -3,31 +3,23 @@ import { ElementDefinition } from "cytoscape";
 export const createGraphElementsCollection = (
   numberOfNodes: number
 ): ElementDefinition[] => {
-  const nodeElements: ElementDefinition[] = [];
-  const edgeElements: ElementDefinition[] = [];
+  const nodeElements: ElementDefinition[] = Array.from(
+    { length: numberOfNodes },
+    (_, i) => ({
+      group: "nodes",
+      data: { id: `${i + 1}` },
+    })
+  );
 
-  for (let i = 0; i < numberOfNodes; i++) {
-    nodeElements.push({ group: "nodes", data: { id: `n${i}` } });
-  }
-
-  nodeElements.forEach((node) => {
-    const sourceNodeId = node.data.id;
-
-    nodeElements.forEach((targetNode) => {
-      const targetNodeId = targetNode.data.id;
-
-      if (sourceNodeId !== targetNodeId) {
-        const random = Math.random();
-
-        if (random <= 0.25) {
-          edgeElements.push({
-            group: "edges",
-            data: { source: sourceNodeId, target: targetNodeId },
-          });
-        }
-      }
-    });
-  });
+  const edgeElements: ElementDefinition[] = nodeElements.flatMap((sourceNode) =>
+    nodeElements
+      .filter((targetNode) => sourceNode.data.id !== targetNode.data.id)
+      .filter(() => Math.random() <= 0.25)
+      .map((targetNode) => ({
+        group: "edges",
+        data: { source: sourceNode.data.id, target: targetNode.data.id },
+      }))
+  );
 
   return nodeElements.concat(edgeElements);
 };
