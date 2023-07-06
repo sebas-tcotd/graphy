@@ -31,6 +31,6 @@ const themeActions: Record<ThemeOptions, Stylesheet[]> = {
   light: [{ selector: "node", style: { backgroundColor: "#333333" } }],
 };
 
-export const setGraphStyle = (theme: ThemeOptions) => {
+export const setGraphStyle = (theme: ThemeOptions): Stylesheet[] => {
   return themeActions[theme];
 };
