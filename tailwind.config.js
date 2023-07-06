@@ -13,6 +13,9 @@ export default {
       screens: {
         sx: "320px",
       },
+      height: {
+        "screen-dynamic": "100dvh"
+      }
     },
   },
   plugins: [],
