@@ -1,5 +1,5 @@
 export enum ModalTypes {
-  NUMBER_OF_NODES = 1,
+  BASIC_OPTIONS = 1,
   LAYOUTS,
   ALGORITHM,
 }

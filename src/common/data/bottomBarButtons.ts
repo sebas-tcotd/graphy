@@ -14,8 +14,8 @@ export const BottomBarButtons: BottomBarButtonsData[] = [
     icon: NumbersIcon,
     name: "Number of nodes",
     modalData: {
-      type: ModalTypes.NUMBER_OF_NODES,
-      title: "Number of nodes",
+      type: ModalTypes.BASIC_OPTIONS,
+      title: "Basic options",
       body: BasicOptionsModalBody,
     },
   },

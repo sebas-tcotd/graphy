@@ -26,7 +26,7 @@ export const Modal: React.FC<ModalProps> = ({
       ref={modalRef}
       className="min-w-[75%] p-6 | backdrop:backdrop-blur-sm backdrop-blur-md bg-white/20 | text-white | border border-white/40 | rounded-lg"
     >
-      <header className="flex flex-row justify-between">
+      <header className="flex flex-row justify-between text-xl">
         <strong>{modalData?.title} </strong>
         <button type="button" title="Cerrar modal" onClick={handleCloseModal}>
           <img src={CloseIcon} alt="Ícono de cerrar" />
