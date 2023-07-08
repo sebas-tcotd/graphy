@@ -25,7 +25,7 @@ export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
         elements: createGraphElementsCollection(numberOfNodes),
         style: setGraphStyle(ThemeOptions.DARK),
       });
-      cyRef.current.layout({ name: "circle", animate: true }).run();
+      cyRef.current.layout({ name: "circle" }).run();
       setGraphLoaded(true);
     })();
   }, [numberOfNodes, graphDivRef]);
@@ -39,7 +39,7 @@ export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
   return (
     <div className="flex flex-col items-center justify-center | flex-1 |  text-center | relative ">
       {numberOfNodes <= 0 ? (
-        <span className="text-white/60 text-sm">
+        <span className="text-white/60 px-8 text-sm">
           Click on the "Generate" button to create a random graph!
         </span>
       ) : (
