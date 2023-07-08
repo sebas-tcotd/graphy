@@ -1,178 +1,209 @@
 <!DOCTYPE html>
 <html class="no-js" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8">
-  <title>Proyecto de Estructura de Datos</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Proyecto de estructura de datos" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
 
-  <meta property="og:title" content="Proyecto de estructura de datos">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="author" href="./humans.txt" />
+    <link rel="apple-touch-icon" href="./icon.png" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
 
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="author" href="humans.txt">
-  <link rel="apple-touch-icon" href="/icon.png">
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/mono-blue.css" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/normalize.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/mono-blue.css">
+    <meta name="theme-color" content="#fafafa" />
+    <title>Graphy Legacy</title>
+  </head>
 
-
-  <meta name="theme-color" content="#fafafa">
-</head>
-
-<body>
-  <header class="content-header">
-
-    <a href="http://www.unmsm.edu.pe/">
-      <img src="/img/sanMarcosLogo.png" alt="Logo San Marcos" class="logo-SM">
-    </a>
-    <div class="titulo">
-      <h1 id="nombre-facultad">Facultad de Ingeniería de Sistemas e Informática</h1>
-      <h2 id="fan-service">Año de la creación de la escuela de Computación Científica</h2>
-      <h2 id="nombre-curso">Estructura de datos</h2>
-    </div>
-    <a href="https://sistemas.unmsm.edu.pe/">
-      <img src="/img/fisiLogo.png" alt="Logo FISI" class="logo-FISI">
-    </a>
-  </header>
-  <div class="opciones">
-    <div class="ingreso-de-datos">
-      <form onsubmit="return false;">
-        <legend class="options">Opciones básicas</legend>
-        <label>Número de nodos: </label>
-        <input type="number" id="numero-nodos" min="0" value="0">
-        <div class="botones">
-          <input type="submit" value="Generar grafo" class="button">
-          <div class="button" id="find-bridges">Hallar puentes</div>
-          <div class="button" id="find-cycles">Hallar ciclos</div>
-        </div>
-      </form>
-    </div>
-    <div class="opciones-avanzadas">
-      <form onsubmit="return false;">
-        <legend class="options">Opciones avanzadas</legend>
-
-        <div class="opc-a">
-          <div class="opc-1">
-            <label for="complexity">Complejidad</label>
+  <body>
+    <header class="content-header">
+      <a href="http://www.unmsm.edu.pe/">
+        <img
+          src="./img/sanMarcosLogo.png"
+          alt="Logo San Marcos"
+          class="logo-SM"
+        />
+      </a>
+      <div class="titulo">
+        <h1 id="nombre-facultad">
+          Facultad de Ingeniería de Sistemas e Informática
+        </h1>
+        <h2 id="fan-service">
+          Año de la creación de la escuela de Computación Científica
+        </h2>
+        <h2 id="nombre-curso">Estructura de datos</h2>
+      </div>
+      <a href="https://sistemas.unmsm.edu.pe/">
+        <img src="./img/fisiLogo.png" alt="Logo FISI" class="logo-FISI" />
+      </a>
+    </header>
+    <div class="opciones">
+      <div class="ingreso-de-datos">
+        <form onsubmit="return false;">
+          <legend class="options">Opciones básicas</legend>
+          <label>Número de nodos: </label>
+          <input type="number" id="numero-nodos" min="0" value="0" />
+          <div class="botones">
+            <input type="submit" value="Generar grafo" class="button" />
+            <div class="button" id="find-bridges">Hallar puentes</div>
+            <div class="button" id="find-cycles">Hallar ciclos</div>
           </div>
-          <div class="opc-2">
-            <input type="range" name="complexity" min="1" max="10" value="1" id="complexity">
-          </div>
+        </form>
+      </div>
+      <div class="opciones-avanzadas">
+        <form onsubmit="return false;">
+          <legend class="options">Opciones avanzadas</legend>
 
-          <div class="opc-3">
-            <legend>Layout</legend>
-          </div>
+          <div class="opc-a">
+            <div class="opc-1">
+              <label for="complexity">Complejidad</label>
+            </div>
+            <div class="opc-2">
+              <input
+                type="range"
+                name="complexity"
+                min="1"
+                max="10"
+                value="1"
+                id="complexity"
+              />
+            </div>
 
-          <div class="opc-4">
-            <div class="layout-options">
-              <button class="button btn-small" id="random">Random</button>
-              <button class="button btn-small" id="concentric">Concéntrico</button>
-              <button class="button btn-small" id="cuadricula">Cuadrícula</button>
-              <button class="button btn-small" id="circle">Circular</button>
-              <button class="button btn-small" id="breadthfirst">BDS</button>
-              <button class="button btn-small" id="cose">COSE</button>
+            <div class="opc-3">
+              <legend>Layout</legend>
+            </div>
+
+            <div class="opc-4">
+              <div class="layout-options">
+                <button class="button btn-small" id="random">Random</button>
+                <button class="button btn-small" id="concentric">
+                  Concéntrico
+                </button>
+                <button class="button btn-small" id="cuadricula">
+                  Cuadrícula
+                </button>
+                <button class="button btn-small" id="circle">Circular</button>
+                <button class="button btn-small" id="breadthfirst">BDS</button>
+                <button class="button btn-small" id="cose">COSE</button>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="contenedor">
-
-
-    <div class="grafo-y-pseudo">
-      <div id="contenedor-grafo">
-        <div id="grafo">
-
-        </div>
-        <span class="material-icons img-center">filter_center_focus</span>
-        <span class="material-icons fullscreen">fullscreen</span>
+        </form>
       </div>
+    </div>
+    <div class="contenedor">
+      <div class="grafo-y-pseudo">
+        <div id="contenedor-grafo">
+          <div id="grafo"></div>
+          <span class="material-icons img-center">filter_center_focus</span>
+          <span class="material-icons fullscreen">fullscreen</span>
+        </div>
 
-      <div id="pseudocodigo">
-        <h2>Pseudocódigo</h2>
-        <pre class="codigo-pseudo">
+        <div id="pseudocodigo">
+          <h2>Pseudocódigo</h2>
+          <pre class="codigo-pseudo">
           <code>
           </code>
       </pre>
-        <!-- Aquí va el pseudocódigo -->
+          <!-- Aquí va el pseudocódigo -->
 
-        <h2>Tiempo de ejecución</h2>
-        <p id="limpito">¡Todo limpio!</p>
-        <span id="tiempo-ejecucion-grafo"></span><br>
-        <span id="tiempo-puentes"></span><br>
-        <span id="tiempo-ciclos"></span>
-        <p>🙂</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Integrantes</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <ul>
-            <li>Linares Purizaca, Mauricio Javier (18200086)</li>
-            <li>Rodríguez Cornejo, Martín Andrés (18200097)</li>
-            <li>Torres Briones, Diego Leonardo (18200322)</li>
-            <li>Vargas Pizango, Sebastian Enrique (18200104)</li>
-          </ul>
+          <h2>Tiempo de ejecución</h2>
+          <p id="limpito">¡Todo limpio!</p>
+          <span id="tiempo-ejecucion-grafo"></span><br />
+          <span id="tiempo-puentes"></span><br />
+          <span id="tiempo-ciclos"></span>
+          <p>🙂</p>
         </div>
       </div>
     </div>
-  </div>
 
-  <footer class="site-footer">
-    <div class="contenedor">
-      <p>Grupo 1</p>
-      <button type="button" class="button" data-toggle="modal" data-target="#exampleModal">
-        Ver integrantes
-      </button>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Integrantes</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>Linares Purizaca, Mauricio Javier (18200086)</li>
+              <li>Rodríguez Cornejo, Martín Andrés (18200097)</li>
+              <li>Torres Briones, Diego Leonardo (18200322)</li>
+              <li>Vargas Pizango, Sebastian Enrique (18200104)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-  </footer>
 
+    <footer class="site-footer">
+      <div class="contenedor">
+        <p>Grupo 1</p>
+        <button
+          type="button"
+          class="button"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          Ver integrantes
+        </button>
+      </div>
+    </footer>
 
-  <!-- Zona de scripts -->
-  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
-  </script>
-  <script src="js/plugins.js"></script>
-  <script src="node_modules/cytoscape/dist/cytoscape.min.js"></script>
-  <script src="/js/highlight.pack.js"></script>
-  <script>
-    hljs.initHighlightingOnLoad();
-
-  </script>
-  <script src="/js/main.js"></script>
-
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <!-- <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script> -->
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
-</body>
-
+    <!-- Zona de scripts -->
+    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.25.0/cytoscape.min.js"></script>
+    <script src="./js/plugins.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+    <script src="./js/main.js"></script>
+  </body>
 </html>
