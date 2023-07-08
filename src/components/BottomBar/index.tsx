@@ -1,13 +1,19 @@
-import NumbersIcon from "../../assets/numbers.svg";
-import LayoutsIcon from "../../assets/layouts.svg";
-import FormulaIcon from "../../assets/formula.svg";
 import { buttonClasses } from "./classes";
 import { BottomBarProps } from "./types";
+import { BottomBarButtons } from "../../common/data";
+import { ModalData } from "../../common/interfaces";
 
-export const BottomBar: React.FC<BottomBarProps> = ({ onGenerate }) => {
+export const BottomBar: React.FC<BottomBarProps> = ({
+  onGenerate,
+  onButtonClick,
+}) => {
   const handleGenerateButton = () => {
     const numberOfNodes = Math.floor(Math.random() * 20);
     onGenerate(numberOfNodes);
+  };
+
+  const handleButtonClick = (modalData: ModalData) => {
+    onButtonClick(modalData);
   };
 
   return (
@@ -21,15 +27,17 @@ export const BottomBar: React.FC<BottomBarProps> = ({ onGenerate }) => {
       </button>
 
       <div className="flex items-center">
-        <button type="button" className="p-2 sx:p-4">
-          <img src={NumbersIcon} alt="" />
-        </button>
-        <button type="button" className="p-2 sx:p-4">
-          <img src={LayoutsIcon} alt="" />
-        </button>
-        <button type="button" className="p-2 sx:p-4">
-          <img src={FormulaIcon} alt="" />
-        </button>
+        {BottomBarButtons.map((button) => (
+          <button
+            key={button.modalData.type}
+            type="button"
+            className="p-2 sx:p-4"
+            onClick={() => handleButtonClick(button.modalData)}
+            title={button.name}
+          >
+            <img src={button.icon} alt={button.name} />
+          </button>
+        ))}
       </div>
     </div>
   );

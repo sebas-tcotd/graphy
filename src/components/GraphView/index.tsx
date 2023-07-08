@@ -32,8 +32,7 @@ export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
 
   const handleGraphFocus = (): void => {
     const cy = cyRef.current;
-
-    cy?.reset();
+    cy?.fit();
   };
 
   return (
