@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BottomBar, GraphView, Modal, TopBar } from "./components";
 import { ModalData } from "./common/interfaces";
+import { setModalType } from "./utils/setModalType";
 
 function App() {
   const [numberOfNodes, setNumberOfNodes] = useState<number>(0);
@@ -20,8 +21,17 @@ function App() {
         modalData={modalData}
         modalActive={isModalActive}
         onModalActive={setModalActive}
+      >
+        {modalData &&
+          setModalType({
+            type: modalData?.type,
+            bodyProps: { ...modalData.bodyProps },
+          })}
+      </Modal>
+      <BottomBar
+        onGenerate={setNumberOfNodes}
+        onButtonClick={onBottomButtonClick}
       />
-      <BottomBar onGenerate={setNumberOfNodes} onButtonClick={onBottomButtonClick} />
     </main>
   );
 }

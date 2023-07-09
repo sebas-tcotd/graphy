@@ -2,11 +2,6 @@ import NumbersIcon from "../../assets/numbers.svg";
 import LayoutsIcon from "../../assets/layouts.svg";
 import FormulaIcon from "../../assets/formula.svg";
 import { ModalTypes } from "../../enums";
-import {
-  BasicOptionsModalBody,
-  LayoutOptionsModalBody,
-  AlgorithmModalBody,
-} from "../components";
 import { BottomBarButtonsData } from "../interfaces";
 
 export const BottomBarButtons: BottomBarButtonsData[] = [
@@ -16,7 +11,9 @@ export const BottomBarButtons: BottomBarButtonsData[] = [
     modalData: {
       type: ModalTypes.BASIC_OPTIONS,
       title: "Basic options",
-      body: BasicOptionsModalBody,
+      bodyProps: {
+        placeholder: "Insert a number of nodes",
+      },
     },
   },
   {
@@ -25,7 +22,7 @@ export const BottomBarButtons: BottomBarButtonsData[] = [
     modalData: {
       type: ModalTypes.LAYOUTS,
       title: "Layouts",
-      body: LayoutOptionsModalBody,
+      bodyProps: {},
     },
   },
   {
@@ -34,7 +31,7 @@ export const BottomBarButtons: BottomBarButtonsData[] = [
     modalData: {
       type: ModalTypes.ALGORITHM,
       title: "Algorithms",
-      body: AlgorithmModalBody,
+      bodyProps: {},
     },
   },
 ];

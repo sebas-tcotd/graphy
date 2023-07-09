@@ -2,11 +2,12 @@ import { useEffect, useRef } from "react";
 import { ModalProps } from "./types";
 import CloseIcon from "../../assets/close.svg";
 
-export const Modal: React.FC<ModalProps> = ({
+export const Modal = ({
   modalData,
   modalActive,
   onModalActive,
-}) => {
+  children,
+}: React.PropsWithChildren<ModalProps>) => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
@@ -33,8 +34,7 @@ export const Modal: React.FC<ModalProps> = ({
         </button>
       </header>
       <hr className="my-4" />
-
-      {modalData?.body()}
+      {children}
     </dialog>
   );
 };
