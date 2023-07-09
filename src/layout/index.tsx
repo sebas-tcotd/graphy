@@ -1,10 +1,14 @@
-import { TopBar } from "../components";
+import { BottomBar, TopBar } from "../components";
 
 export const Layout = ({ children }: React.PropsWithChildren<unknown>) => {
   return (
     <>
-      <TopBar />
+      {/* <TopBar />
       {children}
+      <BottomBar
+        onGenerate={setNumberOfNodes}
+        onButtonClick={onBottomButtonClick}
+      /> */}
     </>
   );
 };

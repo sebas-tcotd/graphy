@@ -1,9 +1,10 @@
 import { ElementDefinition } from "cytoscape";
 
 export const createGraphElementsCollection = (
-  numberOfNodes: number
+  numberOfNodes: number,
+  complexity: number
 ): ElementDefinition[] => {
-  const randomFactor = 0.25 as const;
+  const randomFactor = complexity;
 
   const nodeElements: ElementDefinition[] = Array.from(
     { length: numberOfNodes },

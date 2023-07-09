@@ -2,17 +2,24 @@ import { buttonClasses } from "./classes";
 import { BottomBarProps } from "./types";
 import { BottomBarButtons } from "../../common/data";
 import { ModalData } from "../../common/interfaces";
+import { useDispatch } from "react-redux";
+import { setActiveModal, setGraphData } from "../../store/slices";
 
-export const BottomBar: React.FC<BottomBarProps> = ({
-  onGenerate,
-  onButtonClick,
-}) => {
+export const BottomBar: React.FC<BottomBarProps> = ({ onButtonClick }) => {
+  const dispatch = useDispatch();
+
   const handleGenerateButton = () => {
     const numberOfNodes = Math.floor(Math.random() * 20);
-    onGenerate(numberOfNodes);
+    dispatch(
+      setGraphData({
+        numberOfNodes,
+        complexity: Number(Math.random().toFixed(1)),
+      })
+    );
   };
 
   const handleButtonClick = (modalData: ModalData) => {
+    dispatch(setActiveModal({ isActive: true }));
     onButtonClick(modalData);
   };
 

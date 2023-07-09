@@ -1,5 +1,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { buttonClasses } from "../../components/BottomBar/classes";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveModal, setGraphData } from "../../store/slices";
+import { RootState } from "../../store/store";
+import { useEffect } from "react";
 
 interface InputTypes {
   numberOfNodes: number;
@@ -13,8 +17,26 @@ export interface BasicOptionsModalBodyProps {
 export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
   placeholder = "Insert",
 }) => {
-  const { register, handleSubmit } = useForm<InputTypes>();
-  const onSubmit: SubmitHandler<InputTypes> = (data) => console.log({ data });
+  const { numberOfNodes, complexity } = useSelector(
+    (state: RootState) => state.graph
+  );
+  const dispatch = useDispatch();
+  const { register, handleSubmit, setValue } = useForm<InputTypes>();
+
+  useEffect(() => {
+    setValue("numberOfNodes", numberOfNodes as number);
+    setValue("complexity", (complexity as number) * 10);
+  }, [numberOfNodes, complexity, setValue]);
+
+  const onSubmit: SubmitHandler<InputTypes> = (data) => {
+    dispatch(
+      setGraphData({
+        numberOfNodes: data.numberOfNodes,
+        complexity: isNaN(data.complexity) ? 0.5 : data.complexity / 10,
+      })
+    );
+    dispatch(setActiveModal({ isActive: false }));
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
@@ -25,7 +47,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
         <span>Number of nodes</span>
         <input
           type="number"
-          {...register("numberOfNodes")}
+          {...register("numberOfNodes", { required: true })}
           id="control-form--number-of-nodes"
           placeholder={placeholder}
           className="text-white p-3 rounded-lg | border border-white bg-white/25 | focus:shadow-inner-md focus:outline-none focus:ring focus:ring-violet-500 | transition-all | placeholder:text-gray-300"
@@ -40,7 +62,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
         <span>Complexity</span>
         <input
           type="range"
-          {...register("complexity")}
+          {...register("complexity", { required: true })}
           id="control-form--graph-complexity"
           className="my-2 in-range:bg-gradient-to-r accent-white focus:accent-violet-500 active:accent-violet-500 rounded-lg | transition-all"
           min={0}

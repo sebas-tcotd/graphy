@@ -1,25 +1,28 @@
 import { useEffect, useRef } from "react";
 import { ModalProps } from "./types";
 import CloseIcon from "../../assets/close.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { setActiveModal } from "../../store/slices";
 
 export const Modal = ({
   modalData,
-  modalActive,
-  onModalActive,
   children,
 }: React.PropsWithChildren<ModalProps>) => {
+  const dispatch = useDispatch();
+  const { isActive } = useSelector((state: RootState) => state.modal);
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
     if (!modalRef.current) return;
-    if (!modalActive) return modalRef.current?.close();
+    if (!isActive) return modalRef.current?.close();
 
     modalRef.current?.close();
     modalRef.current?.showModal();
-  }, [modalActive]);
+  }, [isActive]);
 
   const handleCloseModal = (): void => {
-    modalRef.current && onModalActive(false);
+    modalRef.current && dispatch(setActiveModal({ isActive: false }));
   };
 
   return (
