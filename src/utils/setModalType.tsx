@@ -27,7 +27,7 @@ export const modalTypeActions: Record<ModalTypes, ModalComponent> = {
   ),
 };
 
-export const setModalType = ({
+export const setModalBody = ({
   type,
   bodyProps,
 }: {

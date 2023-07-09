@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BottomBar, GraphView, Modal, TopBar } from "./components";
 import { ModalData } from "./common/interfaces";
-import { setModalType } from "./utils/setModalType";
+import { setModalBody } from "./utils/setModalType";
 
 function App() {
   const [modalData, setModalData] = useState<ModalData | undefined>(undefined);
@@ -16,7 +16,7 @@ function App() {
       <GraphView />
       <Modal modalData={modalData}>
         {modalData &&
-          setModalType({
+          setModalBody({
             type: modalData?.type,
             bodyProps: { ...modalData.bodyProps },
           })}
