@@ -1,7 +1,8 @@
 import { ModalTypes } from "../../enums";
+import { ModalTypeProps } from "../../utils/setModalType";
 
 export interface ModalData {
-  title: string;
   type: ModalTypes;
-  body: () => React.JSX.Element;
+  title: string;
+  bodyProps: ModalTypeProps;
 }

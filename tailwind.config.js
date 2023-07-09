@@ -8,6 +8,7 @@ export default {
         gray: {
           light: "hsla(224, 30%, 93%, 1)",
           dark: "hsla(224, 30%, 30%, 1)",
+          DEFAULT: "hsla(224, 9%, 90%)"
         },
       },
       screens: {
@@ -15,6 +16,9 @@ export default {
       },
       height: {
         "screen-dynamic": "100dvh"
+      },
+      boxShadow: {
+        "inner-md": "inset 0 0 8px rgb(0 0 0 / 0.25 )"
       }
     },
   },

@@ -1,24 +1,28 @@
 import { useEffect, useRef } from "react";
 import { ModalProps } from "./types";
 import CloseIcon from "../../assets/close.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { setActiveModal } from "../../store/slices";
 
-export const Modal: React.FC<ModalProps> = ({
+export const Modal = ({
   modalData,
-  modalActive,
-  onModalActive,
-}) => {
+  children,
+}: React.PropsWithChildren<ModalProps>) => {
+  const dispatch = useDispatch();
+  const { isActive } = useSelector((state: RootState) => state.modal);
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
     if (!modalRef.current) return;
-    if (!modalActive) return modalRef.current?.close();
+    if (!isActive) return modalRef.current?.close();
 
     modalRef.current?.close();
     modalRef.current?.showModal();
-  }, [modalActive]);
+  }, [isActive]);
 
   const handleCloseModal = (): void => {
-    modalRef.current && onModalActive(false);
+    modalRef.current && dispatch(setActiveModal({ isActive: false }));
   };
 
   return (
@@ -26,15 +30,14 @@ export const Modal: React.FC<ModalProps> = ({
       ref={modalRef}
       className="min-w-[75%] p-6 | backdrop:backdrop-blur-sm backdrop-blur-md bg-white/20 | text-white | border border-white/40 | rounded-lg"
     >
-      <header className="flex flex-row justify-between">
+      <header className="flex flex-row justify-between text-xl">
         <strong>{modalData?.title} </strong>
         <button type="button" title="Cerrar modal" onClick={handleCloseModal}>
           <img src={CloseIcon} alt="Ícono de cerrar" />
         </button>
       </header>
       <hr className="my-4" />
-
-      {modalData?.body()}
+      {children}
     </dialog>
   );
 };

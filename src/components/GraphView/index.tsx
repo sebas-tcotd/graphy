@@ -1,14 +1,20 @@
-import React, { useRef, useEffect, useState } from "react";
-import { GraphViewProps } from "./types";
+import { useRef, useEffect, useState } from "react";
 import { ThemeOptions } from "../../enums";
 import ZoomInIcon from "../../assets/zoom-in.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
-export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
+export const GraphView = () => {
+  const { numberOfNodes, complexity } = useSelector(
+    (state: RootState) => state.graph
+  );
+
   const graphDivRef = useRef<HTMLDivElement | null>(null);
   const cyRef = useRef<cytoscape.Core | null>(null);
   const [isGraphLoaded, setGraphLoaded] = useState(false);
 
   useEffect(() => {
+    if (!(numberOfNodes && complexity)) return;
     if (numberOfNodes <= 0) return;
 
     (async () => {
@@ -22,13 +28,13 @@ export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
 
       cyRef.current = cytoscape({
         container: graphDivRef.current,
-        elements: createGraphElementsCollection(numberOfNodes),
+        elements: createGraphElementsCollection(numberOfNodes, complexity),
         style: setGraphStyle(ThemeOptions.DARK),
       });
       cyRef.current.layout({ name: "circle" }).run();
       setGraphLoaded(true);
     })();
-  }, [numberOfNodes, graphDivRef]);
+  }, [numberOfNodes, complexity, graphDivRef]);
 
   const handleGraphFocus = (): void => {
     const cy = cyRef.current;
@@ -37,7 +43,7 @@ export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
 
   return (
     <div className="flex flex-col items-center justify-center | flex-1 |  text-center | relative ">
-      {numberOfNodes <= 0 ? (
+      {!numberOfNodes || numberOfNodes <= 0 ? (
         <span className="text-white/60 px-8 text-sm">
           Click on the "Generate" button to create a random graph!
         </span>
@@ -45,7 +51,7 @@ export const GraphView: React.FC<GraphViewProps> = ({ numberOfNodes }) => {
         <div id="graph" className="w-full h-full" ref={graphDivRef} />
       )}
 
-      {numberOfNodes > 0 && isGraphLoaded && (
+      {numberOfNodes && numberOfNodes > 0 && isGraphLoaded && (
         <button
           type="button"
           title="Centrar vista"
