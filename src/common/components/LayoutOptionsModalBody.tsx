@@ -4,5 +4,18 @@ export interface LayoutOptionsModalBodyProps {}
 export const LayoutOptionsModalBody: React.FC<
   LayoutOptionsModalBodyProps
 > = () => {
-  return <div>LayoutOptionsModalBody</div>;
+  return (
+    <form>
+      <ul>
+        <li>Random</li>
+        <li>Concentric</li>
+        <li>Circular</li>
+        <li>Grid</li>
+        <li>BFS</li>
+        <li>COSE</li>
+      </ul>
+
+      <span>🙂</span>
+    </form>
+  );
 };

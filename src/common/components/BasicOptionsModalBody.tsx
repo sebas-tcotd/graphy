@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setActiveModal, setGraphData } from "../../store/slices";
 import { RootState } from "../../store/store";
 import { useEffect } from "react";
+import { GraphStatus } from "../../enums";
 
 interface InputTypes {
   numberOfNodes: number;
@@ -29,10 +30,19 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
   }, [numberOfNodes, complexity, setValue]);
 
   const onSubmit: SubmitHandler<InputTypes> = (data) => {
+    const newNumberOfNodes = data.numberOfNodes;
+    const newComplexity = isNaN(data.complexity) ? 0.5 : data.complexity / 10;
+
+    if (newNumberOfNodes === numberOfNodes && newComplexity === complexity) {
+      dispatch(setActiveModal({ isActive: false }));
+      return;
+    }
+
     dispatch(
       setGraphData({
-        numberOfNodes: data.numberOfNodes,
-        complexity: isNaN(data.complexity) ? 0.5 : data.complexity / 10,
+        numberOfNodes: newNumberOfNodes,
+        complexity: newComplexity,
+        status: GraphStatus.CREATING,
       })
     );
     dispatch(setActiveModal({ isActive: false }));
@@ -65,7 +75,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
           {...register("complexity", { required: true })}
           id="control-form--graph-complexity"
           className="my-2 in-range:bg-gradient-to-r accent-white focus:accent-violet-500 active:accent-violet-500 rounded-lg | transition-all"
-          min={0}
+          min={1}
           max={10}
         />
       </label>
