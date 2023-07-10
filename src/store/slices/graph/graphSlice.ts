@@ -13,9 +13,9 @@ export const graphSlice = createSlice({
   name: "graph",
   initialState: {
     numberOfNodes: undefined,
-    complexity: 0.5,
+    complexity: undefined,
     status: GraphStatus.NOT_CREATED,
-    layout: LayoutTypes.CIRCULAR,
+    layout: undefined,
   } as GraphState,
   reducers: {
     setGraphData: (state, { payload }: PayloadAction<GraphState>) => {

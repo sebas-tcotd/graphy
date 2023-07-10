@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { buttonClasses } from "../../components/BottomBar/classes";
-import { GraphStatus } from "../../enums";
+import { GraphStatus, LayoutTypes } from "../../enums";
 import { setGraphData } from "../../store/slices/graph";
 import { setActiveModal } from "../../store/slices/modal";
 import { RootState } from "../../store/store";
@@ -44,11 +44,15 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
         numberOfNodes: newNumberOfNodes,
         complexity: newComplexity,
         status: GraphStatus.CREATING,
-        layout: layout,
+        layout: layout ?? LayoutTypes.CIRCULAR,
       })
     );
     dispatch(setActiveModal({ isActive: false }));
   };
+
+  const getAction = (): string => {
+    return !numberOfNodes || !complexity || !layout ? 'Create' : 'Update'
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
@@ -83,7 +87,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
       </label>
 
       <button type="submit" className={buttonClasses}>
-        Update graph
+        {getAction()} graph
       </button>
     </form>
   );
