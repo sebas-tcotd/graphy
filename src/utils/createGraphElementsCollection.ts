@@ -56,7 +56,6 @@ export const createGraphElementsCollection = (
   numberOfNodes: number,
   complexity: number
 ): ElementDefinition[] => {
-  console.log(numberOfNodes, complexity)
   let N: number = 100000;
   let ids: [] = [];
   var adj_list: [][] = [...new Array(N)].map(_ => []);
