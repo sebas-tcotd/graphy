@@ -1,8 +1,8 @@
 import { useRef, useEffect } from "react";
-import { GraphStatus, ThemeOptions } from "../../enums";
+import { GraphStatus, LayoutTypes, ThemeOptions } from "../../enums";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { setGraphStatus } from "../../store/slices";
+import { setGraphLayout, setGraphStatus } from "../../store/slices/graph";
 
 const LoadingIcon = () => {
   return (
@@ -22,13 +22,14 @@ const LoadingIcon = () => {
 
 export const GraphView = () => {
   const dispatch = useDispatch();
-  const { numberOfNodes, complexity, status } = useSelector(
+  const { numberOfNodes, complexity, status, layout } = useSelector(
     (state: RootState) => state.graph
   );
   const graphDivRef = useRef<HTMLDivElement | null>(null);
   const cyRef = useRef<cytoscape.Core | null>(null);
 
   useEffect(() => {
+    if (!layout) return;
     if (!(numberOfNodes && complexity)) return;
     if (numberOfNodes <= 0) return;
     if (graphDivRef && cyRef) {
@@ -43,16 +44,28 @@ export const GraphView = () => {
       ]);
       const cytoscape = cytoscapeModule.default;
       const { createGraphElementsCollection, setGraphStyle } = utilsModule;
+      const graphLayout = layout ? layout : LayoutTypes.CIRCULAR;
 
       cyRef.current = cytoscape({
         container: graphDivRef.current,
         elements: createGraphElementsCollection(numberOfNodes, complexity),
         style: setGraphStyle(ThemeOptions.DARK),
       });
-      cyRef.current.layout({ name: "concentric" }).run();
+      cyRef.current.layout({ name: graphLayout }).run();
+
+      dispatch(setGraphLayout({ layout: graphLayout }));
       dispatch(setGraphStatus({ status: GraphStatus.CREATED }));
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numberOfNodes, complexity, graphDivRef, dispatch]);
+
+  useEffect(() => {
+    if (!layout) return;
+    if (!cyRef.current) return;
+    const cy = cyRef.current;
+
+    cy?.layout({ name: layout }).run();
+  }, [layout]);
 
   const handleGraphFocus = (): void => {
     const cy = cyRef.current;

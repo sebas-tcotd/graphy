@@ -1,0 +1,68 @@
+<svg
+  width="40"
+  height="40"
+  viewBox="0 0 40 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M10 5C10 7.76142 7.76142 10 5 10C2.23858 10 0 7.76142 0 5C0 2.23858 2.23858 0 5 0C7.76142 0 10 2.23858 10 5Z"
+    fill="white"
+  />
+  <path
+    d="M40 5C40 7.76142 37.7614 10 35 10C32.2386 10 30 7.76142 30 5C30 2.23858 32.2386 0 35 0C37.7614 0 40 2.23858 40 5Z"
+    fill="white"
+  />
+  <path
+    d="M10 30C10 32.7614 7.76142 35 5 35C2.23858 35 0 32.7614 0 30C0 27.2386 2.23858 25 5 25C7.76142 25 10 27.2386 10 30Z"
+    fill="white"
+  />
+  <path
+    d="M10 55C10 57.7614 7.76142 60 5 60C2.23858 60 0 57.7614 0 55C0 52.2386 2.23858 50 5 50C7.76142 50 10 52.2386 10 55Z"
+    fill="white"
+  />
+  <path
+    d="M40 30C40 32.7614 37.7614 35 35 35C32.2386 35 30 32.7614 30 30C30 27.2386 32.2386 25 35 25C37.7614 25 40 27.2386 40 30Z"
+    fill="white"
+  />
+  <path
+    d="M40 55C40 57.7614 37.7614 60 35 60C32.2386 60 30 57.7614 30 55C30 52.2386 32.2386 50 35 50C37.7614 50 40 52.2386 40 55Z"
+    fill="white"
+  />
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M35 55H5V54H35V55Z"
+    fill="white"
+  />
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5 5L35 55L34.1425 55.5145L4.14251 5.51449L5 5Z"
+    fill="white"
+  />
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M35 5L5 5L5 4H35V5Z"
+    fill="white"
+  />
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M35 30V4H36V30H35Z"
+    fill="white"
+  />
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M5 30H35V31H5V30Z"
+    fill="white"
+  />
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M35 5L5 30L4.35982 29.2318L34.3598 4.23178L35 5Z"
+    fill="white"
+  />
+</svg>

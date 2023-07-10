@@ -22,7 +22,7 @@ export const themeStyles: Record<ThemeOptions, Stylesheet[]> = {
     {
       selector: "edge",
       style: {
-        // "curve-style": "bezier",
+        "curve-style": "bezier",
         "line-color": "rgb(240, 240, 240)",
         opacity: 0.5,
       },

@@ -1,13 +1,16 @@
-import { buttonClasses } from "./classes";
-import { BottomBarProps } from "./types";
+import { useDispatch, useSelector } from "react-redux";
 import { BottomBarButtons } from "../../common/data";
 import { ModalData } from "../../common/interfaces";
-import { useDispatch } from "react-redux";
-import { setActiveModal, setGraphData } from "../../store/slices";
-import { GraphStatus } from "../../enums";
+import { GraphStatus, LayoutTypes } from "../../enums";
+import { RootState } from "../../store";
+import { setGraphData } from "../../store/slices/graph";
+import { setActiveModal } from "../../store/slices/modal";
+import { buttonClasses } from "./classes";
+import { BottomBarProps } from "./types";
 
 export const BottomBar: React.FC<BottomBarProps> = ({ onButtonClick }) => {
   const dispatch = useDispatch();
+  const { layout } = useSelector((state: RootState) => state.graph);
 
   const handleGenerateButton = () => {
     const numberOfNodes = Math.floor(Math.random() * 19) + 1;
@@ -17,6 +20,7 @@ export const BottomBar: React.FC<BottomBarProps> = ({ onButtonClick }) => {
         numberOfNodes,
         complexity,
         status: GraphStatus.CREATING,
+        layout: layout ? layout : LayoutTypes.CIRCULAR,
       })
     );
   };

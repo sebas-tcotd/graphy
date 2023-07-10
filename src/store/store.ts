@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { graphSlice, modalSlice } from "./slices";
+import { graphSlice } from "./slices/graph";
+import { modalSlice } from "./slices/modal";
 
 export const store = configureStore({
   reducer: {
