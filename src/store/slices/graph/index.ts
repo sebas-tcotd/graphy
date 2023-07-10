@@ -1,2 +1,2 @@
 export * from "./graphSlice";
-export * from "./modalSlice";
+export * from "./thunks";

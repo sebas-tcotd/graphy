@@ -3,7 +3,7 @@ import { ModalProps } from "./types";
 import CloseIcon from "../../assets/close.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { setActiveModal } from "../../store/slices";
+import { setActiveModal } from "../../store/slices/modal";
 
 export const Modal = ({
   modalData,
@@ -28,7 +28,7 @@ export const Modal = ({
   return (
     <dialog
       ref={modalRef}
-      className="min-w-[75%] p-6 | backdrop:backdrop-blur-sm backdrop-blur-md bg-white/20 | text-white | border border-white/40 | rounded-lg"
+      className="min-w-[75%] p-6 | backdrop:backdrop-blur-sm backdrop-blur-md bg-violet-950/50 | text-white | border border-white/40 | rounded-lg"
     >
       <header className="flex flex-row justify-between text-xl">
         <strong>{modalData?.title} </strong>
