@@ -50,6 +50,7 @@ export const GraphView = () => {
         container: graphDivRef.current,
         elements: createGraphElementsCollection(numberOfNodes, complexity),
         style: setGraphStyle(ThemeOptions.DARK),
+        wheelSensitivity: 0.1,
       });
       cyRef.current.layout({ name: graphLayout }).run();
 
