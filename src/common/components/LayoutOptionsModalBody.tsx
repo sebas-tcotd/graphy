@@ -10,8 +10,6 @@ interface InputTypes {
   layoutType: LayoutTypes;
 }
 
-export interface LayoutOptionsModalBodyProps {}
-
 export const LayoutOptionsModalBody = () => {
   const dispatch = useDispatch();
   const { layout } = useSelector((state: RootState) => state.graph);

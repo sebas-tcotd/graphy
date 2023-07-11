@@ -1,73 +1,57 @@
 import { ElementDefinition } from "cytoscape";
 
-function createNodes(number_nodes: number): ElementDefinition[] {
-  let nodes: ElementDefinition[] = []
-  for (var i = 0; i < number_nodes; i++) {
-    nodes.push({
-      group: "nodes",
-      data: {
-        id: `${i}`,
-        disc: [],
-        low: []
-      },
-      position: {
-        x: Math.random() * 500,
-        y: Math.random() * 500
-      }
-    })
-  }
+/**
+ * Creates a node collection used for the graph creation.
+ * @param numberOfNodes The number of nodes the graph will have
+ * @returns An array containing the information of every node created
+ */
+const createNodes = (numberOfNodes: number): ElementDefinition[] => {
+  return Array.from({ length: numberOfNodes }, (_, i) => ({
+    group: "nodes",
+    data: { id: `${i}` },
+  }));
+};
 
-  return nodes;
-}
+/**
+ * Creates the edges collection for the creation of the graph.
+ * @param adjacencyList The adjacency list used to connect the nodes
+ * @returns An array containing the information of all the edges for the graph
+ */
+const createEdges = (adjacencyList: number[][]) => {
+  const edgesCollection: ElementDefinition[] = [];
 
-function populateIds(number_nodes: number, ids: number[]) {
-  for (var i = 0; i < number_nodes; i++) {
-    ids[i] = i;
-  }
-}
-
-function populateEdges(adyacency_matrix: number[][], adj_list: [][], ids: [], edges: ElementDefinition[], number_nodes: number) {
-  let random = ids[Math.floor(Math.random() * ids.length)]
-  let current_id = random;
-
-  for (var i = 0; i < number_nodes; i++) {
-    random = ids[Math.floor(Math.random() * ids.length)]
-    if (adyacency_matrix[current_id][random] == 0) {
-      edges.push({
+  adjacencyList.forEach((node, nodeId) => {
+    node.forEach((target) =>
+      edgesCollection.push({
         group: "edges",
-        data: {
-          id: `e${current_id}to${random}`,
-          source: `${current_id}`,
-          target: `${random}`
-        },
+        data: { source: nodeId, target, id: `e${nodeId}to${target}` },
       })
+    );
+  });
 
-      adyacency_matrix[current_id][random] = 1;
-      adyacency_matrix[random][current_id] = 1;
-      adj_list[current_id].push(random);
-      adj_list[random].push(current_id);
-    }
-    current_id = random;
-    ids.splice(ids.indexOf(random), 1);
-  }
-}
+  return edgesCollection;
+};
 
+/**
+ * The legacy algorythm for the creation of the graph
+ * @param numberOfNodes The number of nodes the graph will have
+ * @param complexity The complexity factor for the graph. It is translated in how complex the edge's connections the graph will have
+ * @returns An array containing all the nodes and edges information for the creation of the graph
+ */
 export const createGraphElementsCollection = (
   numberOfNodes: number,
   complexity: number
 ): ElementDefinition[] => {
-  let N: number = 100000;
-  let ids: [] = [];
-  var adj_list: [][] = [...new Array(N)].map(_ => []);
-  var adyacency_matrix: number[][] = [...new Array(parseInt(numberOfNodes.toString()))].map(_ => [...new Array(parseInt(numberOfNodes.toString()))].map(_ => 0));
+  const adjacencyList: number[][] = [...new Array(numberOfNodes)].map(() => [
+    ...new Set(
+      Array.from({ length: complexity * 10 }, () =>
+        Math.floor(Math.random() * numberOfNodes)
+      )
+    ),
+  ]);
 
-  let nodeElements: ElementDefinition[] = createNodes(numberOfNodes);
-  let edgeElements: ElementDefinition[] = []
+  const nodeElements: ElementDefinition[] = createNodes(numberOfNodes);
+  const edgesElements: ElementDefinition[] = createEdges(adjacencyList);
 
-  for (var i = 0; i < complexity * 10; i++) {
-    populateIds(numberOfNodes, ids);
-    populateEdges(adyacency_matrix, adj_list, ids, edgeElements, numberOfNodes);
-  }
-
-  return nodeElements.concat(edgeElements);
+  return [...nodeElements, ...edgesElements];
 };
