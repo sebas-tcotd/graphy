@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { GraphStatus, LayoutTypes, ThemeOptions } from "../../enums";
+import { GraphStatus, ThemeOptions } from "../../enums";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setGraphLayout, setGraphStatus } from "../../store/slices/graph";
@@ -44,7 +44,6 @@ export const GraphView = () => {
       ]);
       const cytoscape = cytoscapeModule.default;
       const { createGraphElementsCollection, setGraphStyle } = utilsModule;
-      const graphLayout = layout ? layout : LayoutTypes.CIRCULAR;
 
       cyRef.current = cytoscape({
         container: graphDivRef.current,
@@ -52,9 +51,9 @@ export const GraphView = () => {
         style: setGraphStyle(ThemeOptions.DARK),
         wheelSensitivity: 0.1,
       });
-      cyRef.current.layout({ name: graphLayout }).run();
+      cyRef.current.layout({ name: layout }).run();
 
-      dispatch(setGraphLayout({ layout: graphLayout }));
+      dispatch(setGraphLayout({ layout: layout }));
       dispatch(setGraphStatus({ status: GraphStatus.CREATED }));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
