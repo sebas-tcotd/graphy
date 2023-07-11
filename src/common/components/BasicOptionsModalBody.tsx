@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { buttonClasses } from "../../components/BottomBar/classes";
-import { GraphStatus } from "../../enums";
+import { GraphStatus, LayoutTypes } from "../../enums";
 import { setGraphData } from "../../store/slices/graph";
 import { setActiveModal } from "../../store/slices/modal";
 import { RootState } from "../../store/store";
@@ -38,16 +38,20 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
       dispatch(setActiveModal({ isActive: false }));
       return;
     }
-
+    
     dispatch(
       setGraphData({
         numberOfNodes: newNumberOfNodes,
         complexity: newComplexity,
         status: GraphStatus.CREATING,
-        layout: layout,
+        layout: layout ?? LayoutTypes.CIRCULAR,
       })
     );
     dispatch(setActiveModal({ isActive: false }));
+  };
+
+  const getAction = (): string => {
+    return !numberOfNodes || !complexity || !layout ? "Create" : "Update";
   };
 
   return (
@@ -59,7 +63,10 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
         <span>Number of nodes</span>
         <input
           type="number"
-          {...register("numberOfNodes", { required: true })}
+          {...register("numberOfNodes", {
+            required: true,
+            valueAsNumber: true,
+          })}
           id="control-form--number-of-nodes"
           placeholder={placeholder}
           className="text-white p-3 rounded-lg | border border-white bg-white/25 | focus:shadow-inner-md focus:outline-none focus:ring focus:ring-violet-500 | transition-all | placeholder:text-gray-300"
@@ -74,7 +81,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
         <span>Complexity</span>
         <input
           type="range"
-          {...register("complexity", { required: true })}
+          {...register("complexity", { required: true, valueAsNumber: true })}
           id="control-form--graph-complexity"
           className="my-2 in-range:bg-gradient-to-r accent-white focus:accent-violet-500 active:accent-violet-500 rounded-lg | transition-all"
           min={1}
@@ -83,7 +90,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
       </label>
 
       <button type="submit" className={buttonClasses}>
-        Update graph
+        {getAction()} graph
       </button>
     </form>
   );
