@@ -33,7 +33,7 @@ export const GraphView = () => {
   useEffect(() => {}, [language]);
 
   useEffect(() => {
-    if (!layout) return;
+    if (layout == null) return;
     if (!(numberOfNodes && complexity)) return;
     if (numberOfNodes <= 0) return;
     if (graphDivRef && cyRef) {
@@ -64,8 +64,8 @@ export const GraphView = () => {
   }, [numberOfNodes, complexity, graphDivRef, dispatch]);
 
   useEffect(() => {
-    if (!layout) return;
-    if (!cyRef.current) return;
+    if (layout == null) return;
+    if (cyRef.current == null) return;
     const cy = cyRef.current;
 
     cy?.layout({ name: layout }).run();
