@@ -10,7 +10,9 @@ export const TopBar = () => {
   const { language } = useSelector((state: RootState) => state.settings);
 
   const onLanguageClick = () => {
-    const newLanguage: Languages = language === Languages.ENGLISH ? Languages.SPANISH : Languages.ENGLISH;
+    const newLanguage: Languages =
+      language === Languages.ENGLISH ? Languages.SPANISH : Languages.ENGLISH;
+    localStorage["language"] = JSON.stringify(newLanguage);
 
     dispatch(
       setSettingLanguage({
