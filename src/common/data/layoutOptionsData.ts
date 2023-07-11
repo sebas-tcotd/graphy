@@ -1,14 +1,18 @@
+import { Languages } from "../../enums";
 import { LayoutTypes } from "../../enums/LayoutTypes";
 import { LayoutData } from "../interfaces";
+import { translations } from "./translations";
 
-export const layoutOptionsData: LayoutData[] = [
+export const layoutOptionsData: (language: Languages) => LayoutData[] = (
+  language: Languages
+) => [
   {
-    layoutName: "Random",
+    layoutName: translations.RANDOM[language],
     icon: "assets/icon-random-layout.svg",
     type: LayoutTypes.RANDOM,
   },
   {
-    layoutName: "Centric",
+    layoutName: translations.CENTRIC[language],
     icon: "assets/icon-concentric-layout.svg",
     type: LayoutTypes.CONCENTRIC,
   },
@@ -18,7 +22,7 @@ export const layoutOptionsData: LayoutData[] = [
     type: LayoutTypes.GRID,
   },
   {
-    layoutName: "Circle",
+    layoutName: translations.CIRCLE[language],
     icon: "assets/icon-circle-layout.svg",
     type: LayoutTypes.CIRCULAR,
   },
