@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BottomBarButtons } from "../../common/data";
 import { ModalData } from "../../common/interfaces";
-import { GraphStatus, LayoutTypes } from "../../enums";
+import { GraphStatus, LayoutTypes, ModalTypes } from "../../enums";
 import { RootState } from "../../store";
 import { setGraphData } from "../../store/slices/graph";
 import { setActiveModal } from "../../store/slices/modal";
@@ -10,7 +10,7 @@ import { BottomBarProps } from "./types";
 
 export const BottomBar: React.FC<BottomBarProps> = ({ onButtonClick }) => {
   const dispatch = useDispatch();
-  const { layout } = useSelector((state: RootState) => state.graph);
+  const { layout, status } = useSelector((state: RootState) => state.graph);
 
   const handleGenerateButton = () => {
     const numberOfNodes = Math.floor(Math.random() * 19) + 1;
@@ -36,6 +36,7 @@ export const BottomBar: React.FC<BottomBarProps> = ({ onButtonClick }) => {
         type="button"
         onClick={handleGenerateButton}
         className={buttonClasses}
+        disabled={status === GraphStatus.CREATING}
       >
         Generate
       </button>
@@ -45,11 +46,15 @@ export const BottomBar: React.FC<BottomBarProps> = ({ onButtonClick }) => {
           <button
             key={button.modalData.type}
             type="button"
-            className="p-2 sx:p-4"
+            className="p-2 sx:p-4 disabled:opacity-50"
+            disabled={
+              !(button.modalData.type === ModalTypes.BASIC_OPTIONS) &&
+              status !== GraphStatus.CREATED
+            }
             onClick={() => handleButtonClick(button.modalData)}
             title={button.name}
           >
-            <img src={button.icon} alt={button.name} />
+            <img src={button.icon} alt={button.name} className="" />
           </button>
         ))}
       </div>
