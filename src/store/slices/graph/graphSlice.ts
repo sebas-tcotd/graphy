@@ -1,27 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GraphStatus } from "../../../enums";
+import { GraphStatus, SelectedAlgorithms } from "../../../enums";
 import { LayoutTypes } from "../../../enums/LayoutTypes";
 
 interface GraphState {
   complexity?: number;
   layout?: LayoutTypes;
   numberOfNodes?: number;
+  algorithmUsed?: SelectedAlgorithms;
   status?: GraphStatus;
 }
 
 export const graphSlice = createSlice({
   name: "graph",
   initialState: {
-    numberOfNodes: undefined,
     complexity: undefined,
-    status: GraphStatus.NOT_CREATED,
     layout: undefined,
+    numberOfNodes: undefined,
+    algorithmUsed: undefined,
+    status: GraphStatus.NOT_CREATED,
   } as GraphState,
   reducers: {
     setGraphData: (state, { payload }: PayloadAction<GraphState>) => {
       state.numberOfNodes = payload.numberOfNodes;
       state.complexity = payload.complexity;
       state.layout = payload.layout;
+      state.algorithmUsed = undefined;
     },
     setGraphStatus: (
       state,
@@ -35,8 +38,18 @@ export const graphSlice = createSlice({
     ) => {
       state.layout = payload.layout;
     },
+    setGraphAlgorithm: (
+      state,
+      { payload }: PayloadAction<{ algorithmUsed: SelectedAlgorithms }>
+    ) => {
+      state.algorithmUsed = payload.algorithmUsed;
+    },
   },
 });
 
-export const { setGraphData, setGraphStatus, setGraphLayout } =
-  graphSlice.actions;
+export const {
+  setGraphData,
+  setGraphLayout,
+  setGraphStatus,
+  setGraphAlgorithm,
+} = graphSlice.actions;

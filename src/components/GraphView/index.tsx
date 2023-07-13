@@ -3,6 +3,7 @@ import { GraphStatus, ThemeOptions } from "../../enums";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setGraphLayout, setGraphStatus } from "../../store/slices/graph";
+import { findBridges } from "../../utils/algFindBridges";
 
 const LoadingIcon = () => {
   return (
@@ -22,9 +23,8 @@ const LoadingIcon = () => {
 
 export const GraphView = () => {
   const dispatch = useDispatch();
-  const { numberOfNodes, complexity, status, layout } = useSelector(
-    (state: RootState) => state.graph
-  );
+  const { numberOfNodes, complexity, status, layout, algorithmUsed } =
+    useSelector((state: RootState) => state.graph);
   const graphDivRef = useRef<HTMLDivElement | null>(null);
   const cyRef = useRef<cytoscape.Core | null>(null);
 
@@ -71,6 +71,12 @@ export const GraphView = () => {
     const cy = cyRef.current;
     cy?.fit();
   };
+
+  useEffect(() => {
+    if (!algorithmUsed) return;
+
+    findBridges(cyRef.current as cytoscape.Core);
+  }, [algorithmUsed]);
 
   return (
     <div className="flex flex-col items-center justify-center | flex-1 |  text-center | relative ">

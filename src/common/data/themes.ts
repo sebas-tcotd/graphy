@@ -22,9 +22,18 @@ export const themeStyles: Record<ThemeOptions, Stylesheet[]> = {
     {
       selector: "edge",
       style: {
-        "curve-style": "bezier",
         "line-color": "rgb(240, 240, 240)",
         opacity: 0.5,
+      },
+    },
+    {
+      selector: ".highlight",
+      style: {
+        "background-color": "#B721FF",
+        color: "white",
+        "line-color": "rgba(184, 31, 255, 0.5)",
+        "transition-property": "background-color, line-color",
+        "transition-duration": 0.5,
       },
     },
   ],
