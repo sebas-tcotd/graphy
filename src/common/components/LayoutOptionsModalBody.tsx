@@ -13,6 +13,7 @@ interface InputTypes {
 export const LayoutOptionsModalBody = () => {
   const dispatch = useDispatch();
   const { layout } = useSelector((state: RootState) => state.graph);
+  const { language } = useSelector((state: RootState) => state.settings);
   const { register } = useForm<InputTypes>();
 
   const handleOptionClick = (type: LayoutTypes) => {
@@ -22,7 +23,7 @@ export const LayoutOptionsModalBody = () => {
 
   return (
     <form className="grid grid-cols-2 sx:grid-cols-3 gap-4 md:gap-8">
-      {layoutOptionsData.map(({ icon, layoutName, type }) => (
+      {layoutOptionsData(language).map(({ icon, layoutName, type }) => (
         <label
           htmlFor={`layout-form__${type}`}
           className="flex flex-col h-full items-center"

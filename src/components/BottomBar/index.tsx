@@ -7,10 +7,12 @@ import { setGraphData } from "../../store/slices/graph";
 import { setActiveModal } from "../../store/slices/modal";
 import { buttonClasses } from "./classes";
 import { BottomBarProps } from "./types";
+import { translations } from "../../common/data/translations";
 
 export const BottomBar: React.FC<BottomBarProps> = ({ onButtonClick }) => {
   const dispatch = useDispatch();
   const { layout, status } = useSelector((state: RootState) => state.graph);
+  const { language } = useSelector((state: RootState) => state.settings);
 
   const handleGenerateButton = () => {
     const numberOfNodes = Math.floor(Math.random() * 19) + 1;
@@ -38,11 +40,11 @@ export const BottomBar: React.FC<BottomBarProps> = ({ onButtonClick }) => {
         className={buttonClasses}
         disabled={status === GraphStatus.CREATING}
       >
-        Generate
+        {translations.GENERATE[language]}
       </button>
 
       <div className="flex items-center">
-        {BottomBarButtons.map((button) => (
+        {BottomBarButtons(language).map((button) => (
           <button
             key={button.modalData.type}
             type="button"

@@ -5,7 +5,7 @@ import { setGraphLayout, setGraphStatus } from "../../store/slices/graph";
 import { RootState } from "../../store/store";
 import { AlgorithmContext, AlgorithmStrategy } from "../../utils/algorithms";
 import { graphAlgorithms } from "../../utils/algorithms/algorithmsRecord";
-// import { executeAlgorithm } from "../../utils/algorithms";
+import { translations } from "../../common/data/translations";
 
 const LoadingIcon = () => {
   return (
@@ -27,12 +27,15 @@ export const GraphView = () => {
   const dispatch = useDispatch();
   const { numberOfNodes, complexity, status, layout, algorithmUsed } =
     useSelector((state: RootState) => state.graph);
+  const { language } = useSelector((state: RootState) => state.settings);
   const graphDivRef = useRef<HTMLDivElement | null>(null);
   const cyRef = useRef<cytoscape.Core | null>(null);
   const algorithmContext = useMemo(() => new AlgorithmContext(), []);
 
+  useEffect(() => {}, [language]);
+
   useEffect(() => {
-    if (!layout) return;
+    if (layout == null) return;
     if (!(numberOfNodes && complexity)) return;
     if (numberOfNodes <= 0) return;
     if (graphDivRef && cyRef) {
@@ -63,8 +66,8 @@ export const GraphView = () => {
   }, [numberOfNodes, complexity, graphDivRef, dispatch]);
 
   useEffect(() => {
-    if (!layout) return;
-    if (!cyRef.current) return;
+    if (layout == null) return;
+    if (cyRef.current == null) return;
     const cy = cyRef.current;
 
     cy?.layout({ name: layout }).run();
@@ -79,8 +82,6 @@ export const GraphView = () => {
     if (!algorithmUsed) return;
     if (!cyRef.current) return;
 
-    // debugger;
-
     const strategy: AlgorithmStrategy = graphAlgorithms[algorithmUsed](
       cyRef.current
     );
@@ -89,12 +90,14 @@ export const GraphView = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [algorithmUsed]);
 
+  const getInitialText = () => {
+    return translations.INITIAL_MESSAGE[language];
+  };
+
   return (
     <div className="flex flex-col items-center justify-center | flex-1 |  text-center | relative ">
       {!numberOfNodes || numberOfNodes <= 0 ? (
-        <span className="text-white/60 px-8 text-sm">
-          Click on the "Generate" button to create a random graph!
-        </span>
+        <span className="text-white/60 px-8 text-sm">{getInitialText()}</span>
       ) : (
         <div id="graph" className="w-full h-full" ref={graphDivRef} />
       )}

@@ -1,36 +1,39 @@
 import NumbersIcon from "../../assets/numbers.svg";
 import LayoutsIcon from "../../assets/layouts.svg";
 import FormulaIcon from "../../assets/formula.svg";
-import { ModalTypes } from "../../enums";
+import { Languages, ModalTypes } from "../../enums";
 import { BottomBarButtonsData } from "../interfaces";
+import { translations } from "./translations";
 
-export const BottomBarButtons: BottomBarButtonsData[] = [
+export const BottomBarButtons: (
+  language: Languages
+) => BottomBarButtonsData[] = (language: Languages) => [
   {
     icon: NumbersIcon,
-    name: "Number of nodes",
+    name: translations.NUMBER_NODES[language],
     modalData: {
       type: ModalTypes.BASIC_OPTIONS,
-      title: "Basic options",
+      title: translations.OPTIONS_TITLE[language],
       bodyProps: {
-        placeholder: "Insert a number of nodes",
+        placeholder: translations.NODES_PLACEHOLDER[language],
       },
     },
   },
   {
     icon: LayoutsIcon,
-    name: "Set layout",
+    name: translations.LAYOUTS[language],
     modalData: {
       type: ModalTypes.LAYOUTS,
-      title: "Layouts",
+      title: translations.LAYOUTS[language],
       bodyProps: {},
     },
   },
   {
     icon: FormulaIcon,
-    name: "Use algorythm",
+    name: translations.ALGORITHMS[language],
     modalData: {
       type: ModalTypes.ALGORITHM,
-      title: "Algorithms",
+      title: translations.ALGORITHMS[language],
       bodyProps: {},
     },
   },
