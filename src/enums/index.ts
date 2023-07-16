@@ -1,6 +1,5 @@
 export * from "./LayoutTypes";
 export * from "./ModalTypes";
-export * from "./SelectedAlgorithms";
+export * from "./GraphAlgorithms";
 export * from "./graphStatus";
 export * from "./themes";
-

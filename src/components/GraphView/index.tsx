@@ -1,9 +1,11 @@
-import { useRef, useEffect } from "react";
-import { GraphStatus, ThemeOptions } from "../../enums";
+import { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { GraphStatus, ThemeOptions } from "../../enums";
 import { setGraphLayout, setGraphStatus } from "../../store/slices/graph";
-import { findBridges } from "../../utils/algFindBridges";
+import { RootState } from "../../store/store";
+import { AlgorithmContext, AlgorithmStrategy } from "../../utils/algorithms";
+import { graphAlgorithms } from "../../utils/algorithms/algorithmsRecord";
+// import { executeAlgorithm } from "../../utils/algorithms";
 
 const LoadingIcon = () => {
   return (
@@ -27,6 +29,7 @@ export const GraphView = () => {
     useSelector((state: RootState) => state.graph);
   const graphDivRef = useRef<HTMLDivElement | null>(null);
   const cyRef = useRef<cytoscape.Core | null>(null);
+  const algorithmContext = useMemo(() => new AlgorithmContext(), []);
 
   useEffect(() => {
     if (!layout) return;
@@ -74,8 +77,16 @@ export const GraphView = () => {
 
   useEffect(() => {
     if (!algorithmUsed) return;
+    if (!cyRef.current) return;
 
-    findBridges(cyRef.current as cytoscape.Core);
+    // debugger;
+
+    const strategy: AlgorithmStrategy = graphAlgorithms[algorithmUsed](
+      cyRef.current
+    );
+    algorithmContext.setStrategy(strategy);
+    algorithmContext.executeAlgorithm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [algorithmUsed]);
 
   return (

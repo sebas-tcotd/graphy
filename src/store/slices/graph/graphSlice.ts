@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GraphStatus, SelectedAlgorithms } from "../../../enums";
+import { GraphStatus, GraphAlgorithmTypes } from "../../../enums";
 import { LayoutTypes } from "../../../enums/LayoutTypes";
 
 interface GraphState {
   complexity?: number;
   layout?: LayoutTypes;
   numberOfNodes?: number;
-  algorithmUsed?: SelectedAlgorithms;
+  algorithmUsed?: GraphAlgorithmTypes;
   status?: GraphStatus;
 }
 
@@ -40,7 +40,7 @@ export const graphSlice = createSlice({
     },
     setGraphAlgorithm: (
       state,
-      { payload }: PayloadAction<{ algorithmUsed: SelectedAlgorithms }>
+      { payload }: PayloadAction<{ algorithmUsed?: GraphAlgorithmTypes }>
     ) => {
       state.algorithmUsed = payload.algorithmUsed;
     },
