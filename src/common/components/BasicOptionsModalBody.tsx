@@ -6,6 +6,7 @@ import { GraphStatus, LayoutTypes } from "../../enums";
 import { setGraphData } from "../../store/slices/graph";
 import { setActiveModal } from "../../store/slices/modal";
 import { RootState } from "../../store/store";
+import { translations } from "../data/translations";
 
 interface InputTypes {
   numberOfNodes: number;
@@ -22,6 +23,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
   const { numberOfNodes, complexity, layout } = useSelector(
     (state: RootState) => state.graph
   );
+  const { language } = useSelector((state: RootState) => state.settings);
   const dispatch = useDispatch();
   const { register, handleSubmit, setValue } = useForm<InputTypes>();
 
@@ -38,7 +40,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
       dispatch(setActiveModal({ isActive: false }));
       return;
     }
-    
+
     dispatch(
       setGraphData({
         numberOfNodes: newNumberOfNodes,
@@ -51,7 +53,9 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
   };
 
   const getAction = (): string => {
-    return !numberOfNodes || !complexity || !layout ? "Create" : "Update";
+    return !numberOfNodes || !complexity || !layout
+      ? translations.CREATE_GRAPH[language]
+      : translations.UPDATE_GRAPH[language];
   };
 
   return (
@@ -60,7 +64,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
         className="font-bold flex flex-col gap-2"
         htmlFor="control-form--number-of-nodes"
       >
-        <span>Number of nodes</span>
+        <span>{translations.NUMBER_NODES[language]}</span>
         <input
           type="number"
           {...register("numberOfNodes", {
@@ -78,7 +82,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
         htmlFor="control-form--graph-complexity"
         className="font-bold flex flex-col gap-2"
       >
-        <span>Complexity</span>
+        <span>{translations.COMPLEXITY[language]}</span>
         <input
           type="range"
           {...register("complexity", { required: true, valueAsNumber: true })}
@@ -90,7 +94,7 @@ export const BasicOptionsModalBody: React.FC<BasicOptionsModalBodyProps> = ({
       </label>
 
       <button type="submit" className={buttonClasses}>
-        {getAction()} graph
+        {getAction()}
       </button>
     </form>
   );

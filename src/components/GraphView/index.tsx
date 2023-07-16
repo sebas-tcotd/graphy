@@ -3,6 +3,7 @@ import { GraphStatus, ThemeOptions } from "../../enums";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setGraphLayout, setGraphStatus } from "../../store/slices/graph";
+import { translations } from "../../common/data/translations";
 
 const LoadingIcon = () => {
   return (
@@ -25,11 +26,14 @@ export const GraphView = () => {
   const { numberOfNodes, complexity, status, layout } = useSelector(
     (state: RootState) => state.graph
   );
+  const { language } = useSelector((state: RootState) => state.settings);
   const graphDivRef = useRef<HTMLDivElement | null>(null);
   const cyRef = useRef<cytoscape.Core | null>(null);
 
+  useEffect(() => {}, [language]);
+
   useEffect(() => {
-    if (!layout) return;
+    if (layout == null) return;
     if (!(numberOfNodes && complexity)) return;
     if (numberOfNodes <= 0) return;
     if (graphDivRef && cyRef) {
@@ -60,8 +64,8 @@ export const GraphView = () => {
   }, [numberOfNodes, complexity, graphDivRef, dispatch]);
 
   useEffect(() => {
-    if (!layout) return;
-    if (!cyRef.current) return;
+    if (layout == null) return;
+    if (cyRef.current == null) return;
     const cy = cyRef.current;
 
     cy?.layout({ name: layout }).run();
@@ -72,12 +76,14 @@ export const GraphView = () => {
     cy?.fit();
   };
 
+  const getInitialText = () => {
+    return translations.INITIAL_MESSAGE[language];
+  };
+
   return (
     <div className="flex flex-col items-center justify-center | flex-1 |  text-center | relative ">
       {!numberOfNodes || numberOfNodes <= 0 ? (
-        <span className="text-white/60 px-8 text-sm">
-          Click on the "Generate" button to create a random graph!
-        </span>
+        <span className="text-white/60 px-8 text-sm">{getInitialText()}</span>
       ) : (
         <div id="graph" className="w-full h-full" ref={graphDivRef} />
       )}
