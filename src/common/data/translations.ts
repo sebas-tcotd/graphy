@@ -2,8 +2,8 @@ import { TranslationItem } from "../../enums/TranslationItem";
 
 export const translations: Record<TranslationItem, string[]> = {
   INITIAL_MESSAGE: [
-    'Haz click en el botón "Generar" para crear un grafo aleatorio!',
-    'Click on the "Generate" button to create a random graph!',
+    '¡Haz click en el botón "Generar" para crear un grafo aleatorio!',
+    '¡Click on the "Generate" button to create a random graph!',
   ],
   GENERATE: ["Generar", "Generate"],
   OPTIONS_TITLE: ["Opciones básicas", "Basic Options"],

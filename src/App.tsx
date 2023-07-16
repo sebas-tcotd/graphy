@@ -10,7 +10,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const cachedLanguage = localStorage["language"];
+    const cachedLanguage = localStorage.getItem("language");
     if (cachedLanguage) {
       dispatch(
         setSettingLanguage({
