@@ -1,9 +1,9 @@
 import { AlgorithmStrategy } from "./interface";
 
-export class AlgorithmContext {
+export class GraphContext {
   private algorithmStrategy!: AlgorithmStrategy;
 
-  public setStrategy(strategy: AlgorithmStrategy) {
+  public setAlgorithmStrategy(strategy: AlgorithmStrategy) {
     this.algorithmStrategy = strategy;
   }
 

@@ -22,11 +22,11 @@ export const LayoutOptionsModalBody = () => {
   };
 
   return (
-    <form className="grid grid-cols-2 sx:grid-cols-3 gap-4 md:gap-8">
-      {layoutOptionsData(language).map(({ icon, layoutName, type }) => (
+    <form className="grid grid-cols-2 gap-4 sx:grid-cols-3 md:gap-8">
+      {layoutOptionsData(language).map(({ Icon, layoutName, type }) => (
         <label
           htmlFor={`layout-form__${type}`}
-          className="flex flex-col h-full items-center"
+          className="flex flex-col items-center h-full"
           key={type}
         >
           <button
@@ -35,7 +35,7 @@ export const LayoutOptionsModalBody = () => {
             onClick={() => handleOptionClick(type)}
             disabled={layout === type}
           >
-            <img src={icon} alt={`${layoutName} Layout`} />
+            <Icon />
             <input
               type="radio"
               id={`layout-form__${type}`}

@@ -2,6 +2,8 @@ import cytoscape, { Core } from "cytoscape";
 import { highlightElement } from "../../highlightElement";
 import { AlgorithmStrategy } from "..";
 
+
+
 /**
  * Parameters for the getBridges function.
  */
@@ -39,7 +41,7 @@ export class LegacyBridgesFinder implements AlgorithmStrategy {
     disc[nodeIndex] = low[nodeIndex] = ++time;
 
     const adjacentNodes = graph
-      .$(`#${nodeIndex}`)
+      .$(`#${nodeIndex}` ?? "#0")
       .neighborhood("nodes")
       .map((element) => parseInt(element.id()));
 
