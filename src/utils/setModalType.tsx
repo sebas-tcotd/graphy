@@ -1,15 +1,12 @@
 import {
   AlgorithmModalBody,
-  AlgorithmModalBodyProps,
   BasicOptionsModalBody,
   BasicOptionsModalBodyProps,
   LayoutOptionsModalBody,
 } from "../common/components";
 import { ModalTypes } from "../enums";
 
-export type ModalTypeProps =
-  | BasicOptionsModalBodyProps
-  | AlgorithmModalBodyProps;
+export type ModalTypeProps = BasicOptionsModalBodyProps;
 
 export type ModalComponent = (props: ModalTypeProps) => React.JSX.Element;
 
@@ -18,9 +15,7 @@ export const modalTypeActions: Record<ModalTypes, ModalComponent> = {
     <BasicOptionsModalBody {...(props as BasicOptionsModalBodyProps)} />
   ),
   [ModalTypes.LAYOUTS]: () => <LayoutOptionsModalBody />,
-  [ModalTypes.ALGORITHM]: (props) => (
-    <AlgorithmModalBody {...(props as AlgorithmModalBodyProps)} />
-  ),
+  [ModalTypes.ALGORITHM]: () => <AlgorithmModalBody />,
 };
 
 export const setModalBody = ({
