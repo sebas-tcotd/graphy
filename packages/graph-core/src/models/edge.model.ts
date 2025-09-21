@@ -4,5 +4,5 @@ export interface Edge {
   readonly target: string;
   readonly weight: number;
   readonly directed: boolean;
-  readonly attributes?: Record<string, any>;
+  readonly attributes?: Record<string, unknown>;
 }
