@@ -173,6 +173,41 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
 
+  packages/use-cases:
+    dependencies:
+      '@graphy/graph-core':
+        specifier: workspace:*
+        version: link:../graph-core
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.2
+
+  packages/workers:
+    dependencies:
+      '@graphy/graph-core':
+        specifier: workspace:*
+        version: link:../graph-core
+      '@graphy/use-cases':
+        specifier: workspace:*
+        version: link:../use-cases
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.2
+
 packages:
 
   '@emnapi/runtime@1.4.5':

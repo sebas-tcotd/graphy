@@ -1,0 +1,24 @@
+{
+  "name": "@graphy/workers",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint './src/**/*.ts'",
+    "lint:fix": "eslint './src/**/*.ts' --fix"
+  },
+  "dependencies": {
+    "@graphy/use-cases": "workspace:*",
+    "@graphy/graph-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5.9.2"
+  },
+  "exports": {
+    "./*": {
+      "import": "./**.ts"
+    }
+  }
+}

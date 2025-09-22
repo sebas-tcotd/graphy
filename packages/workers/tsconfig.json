@@ -1,0 +1,11 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "outDir": "dist",
+    "sourceMap": true
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": ["src"]
+}
